@@ -1,0 +1,9 @@
+#waterwheelCarousel {
+    width:960px;
+    background-color:gray;
+    height:250px;
+}
+#waterwheelCarousel > img {
+    display:none;
+    cursor:pointer;
+}
