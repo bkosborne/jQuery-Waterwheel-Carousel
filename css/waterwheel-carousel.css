@@ -1,9 +1,25 @@
-#waterwheelCarousel {
-    width:960px;
-    background-color:#CCC;
-    height:250px;
+#waterwheel-carousel {
+  width:960px;
+  background-color:#CCC;
+  height:250px;
+  font-family: Arial;
+  font-size:14px;
+  position:relative;
 }
-#waterwheelCarousel > img {
-    display:none;
-    cursor:pointer;
+#waterwheel-carousel a {
+  color:#222;
+}
+#waterwheel-carousel #carousel-images img {
+  display:none;
+  cursor:pointer;
+}
+#waterwheel-carousel #carousel-controls #carousel-prev {
+  position:absolute;
+  bottom:30px;
+  left:30px;
+}
+#waterwheel-carousel #carousel-controls #carousel-next {
+  position:absolute;
+  bottom:30px;
+  right:30px;
 }

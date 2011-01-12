@@ -30,8 +30,8 @@
        * unless you know what you're doing. Most of them feed off the options
        * so most customization can be achieved by modifying the options values */
       var data = {
-        itemsContainer:         $(this),
-        totalItems:             $(this).find("img").length,
+        itemsContainer:         $(this).find("#carousel-images"),
+        totalItems:             $(this).find("#carousel-images img").length,
         containerWidth:         $(this).width(),
         containerHeight:        $(this).height(),
         currentCenterItem:      null,
@@ -41,7 +41,6 @@
         itemWidths:             [],
         itemHeights:            [],
         itemOpacities:          [],
-        containerIDTag:         "#"+$(this).attr("id"),
         carouselRotationsLeft:  0,
         currentlyMoving:        false,
         itemsAnimating:         0,
@@ -540,7 +539,7 @@
        * to get the clicked item to the center, or will fire the custom event
        * the user passed in if the center item is clicked
        */
-      $('img',data.containerIDTag).live("click", function () {
+      $('img','#carousel-images').live("click", function () {
         var itemPosition = $(this).data().currentPosition;
         var rotations = Math.abs(itemPosition);
         if (itemPosition < 0) {
@@ -556,7 +555,7 @@
        * The user may choose to wrap the images is link tags. If they do this, we need to
        * make sure that they aren't active for certain situations
        */
-      $('a',data.containerIDTag).live("click", function (event) {
+      $('a','#carousel-images').live("click", function (event) {
         var isCenter = ($(this).find('img').width() == $(this).find('img').data().owidth) ? true : false;
         // should we disable the links?
         if (options.linkHandling == 1 || // turn off all links
@@ -570,16 +569,20 @@
       /**
        * Event handlers for the optional carousel controls
        */
-      $('#carousel-prev').live('click',function () {
+      $('#carousel-prev').live('click',function (e) {
         rotateCarousel(true,1);
+        e.preventDefault();
+        return false;
       });
-      $('#carousel-next').live('click',function () {
+      $('#carousel-next').live('click',function (e) {
         rotateCarousel(false,1);
+        e.preventDefault();
+        return false;
       });
-      $('#carousel-play').live('click',function () {
+      $('#carousel-play').live('click',function (e) {
         autoPlay();
       });
-      $('#carousel-pause').live('click',function () {
+      $('#carousel-pause').live('click',function (e) {
         autoPlay(true);
       });
 
