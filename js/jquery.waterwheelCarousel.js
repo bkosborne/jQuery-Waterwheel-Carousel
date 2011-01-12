@@ -591,7 +591,7 @@
         startingItem:               1,      // item to place in the center at the start
         startingItemSeparation:     150,    // the starting separation distance between each item
         itemSeparationFactor:       .5,     // determines how drastically the item separation decreases
-        startingWaveSeparation:     30,      // the starting separation distance for the wave
+        startingWaveSeparation:     30,     // the starting separation distance for the wave
         waveSeparationFactor:       .75,    // determines how drastically the wave separation decreases
         itemDecreaseFactor:         .8,     // determines how drastically the item's width and height decrease
         opacityDecreaseFactor:      .5,     // determines how drastically the item's opacity decreases
@@ -599,11 +599,11 @@
         flankingItems:              4,      // the number of items visible on either side of the center
         speed:                      300,    // speed in milliseconds it will take to rotate from one to the next
         animationEasing:            'linear',// the animation easing when rotating each item
-        quickerForFurther:	    true, // set to true to make animations faster when clicking an item that is far away from the center
+        quickerForFurther:          true,   // set to true to make animations faster when clicking an item that is far away from the center
         movedToCenter:              $.noop, // custom function executed when an item moves to the center
-        clickedCenter:              $.noop,  // custom function executed when the center item is clicked
-        linkHandling:               2,       // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
-        autoPlay:                   5000       // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
+        clickedCenter:              $.noop, // custom function executed when the center item is clicked
+        linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
+        autoPlay:                   0       // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     };
 
 })(jQuery);
