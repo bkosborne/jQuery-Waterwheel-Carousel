@@ -14,15 +14,10 @@
  */
 (function($) {
 
-  $.fn.waterwheelCarousel = function (orientation, options) {
+  $.fn.waterwheelCarousel = function (options) {
 
     // override the default options with user defined options
     options = $.extend({}, $.fn.waterwheelCarousel.defaults, options || {});
-
-    // user can only select vertical. if anything else, use horizontal
-    if (orientation != "vertical") {
-      orientation = "horizontal";
-    }
 
     return $(this).each(function () {
 
@@ -183,7 +178,7 @@
             .each(function (i) {
               // Put all images in the center default position
               var newLeft,newTop;
-              if (orientation == "horizontal") {
+              if (options.orientation == "horizontal") {
                 newLeft = (data.containerWidth / 2) - ($(this).width() / 2);
                 newTop = options.centerOffset;
               } else {
@@ -224,6 +219,9 @@
        * figure out what items go where and will animate them there
        */
       function setupStarterRotation() {
+        // Do we need to calculate the starting item?
+        options.startingItem = (options.startingItem == 0) ? Math.round(data.totalItems / 2) : options.startingItem;
+      
         // We will be rotating the carousel, so we set the animation queue to one
         data.carouselRotationsLeft = 1;
 
@@ -304,7 +302,7 @@
         /** CALCULATE THE NEW WAVE SEPARATION OF THE ITEM **/
           var waveSeparation = 0, centeringNumber
           // number to center item on horizon (vertical or horizontal)
-          if (orientation == "horizontal")
+          if (options.orientation == "horizontal")
             centeringNumber = heightDifference / 2;
           else
             centeringNumber = widthDifference / 2;
@@ -335,7 +333,7 @@
           // Need to account for additional size separation only if the item is
           // on the right side or moving to the center from the right side
           if (newPosition > 0 || (newPosition == 0 && oldPosition == 1)) {
-            if (orientation == "horizontal")
+            if (options.orientation == "horizontal")
               itemSeparation += widthDifference;
             else
               itemSeparation += heightDifference;
@@ -356,7 +354,7 @@
         // Figure out the new top and left values based on the orientation
         var newTop = $item.data().top;
         var newLeft = $item.data().left;
-        if (orientation == "horizontal") {
+        if (options.orientation == "horizontal") {
           newTop = $item.data().top + waveSeparation;
           newLeft = $item.data().left + itemSeparation;
         } else {
@@ -591,7 +589,7 @@
   };
 
   $.fn.waterwheelCarousel.defaults = {
-    startingItem:               1,      // item to place in the center at the start
+    startingItem:               0,      // item to place in the center at the start, set to zero to be the middle item
     startingItemSeparation:     150,    // the starting separation distance between each item
     itemSeparationFactor:       .5,     // determines how drastically the item separation decreases
     startingWaveSeparation:     30,     // the starting separation distance for the wave
@@ -606,7 +604,8 @@
     movedToCenter:              $.noop, // custom function executed when an item moves to the center
     clickedCenter:              $.noop, // custom function executed when the center item is clicked
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
-    autoPlay:                   0       // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
+    autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
+    orientation:                'horizontal' // indicate if the carousel should be horizontal or vertical
   };
 
 })(jQuery);
