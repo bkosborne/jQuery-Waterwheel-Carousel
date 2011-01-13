@@ -5,20 +5,21 @@
   font-family: Arial;
   font-size:14px;
   position:relative;
+  clear:both;
 }
 #waterwheel-carousel a {
   color:#222;
 }
-#waterwheel-carousel #carousel-images img {
+#waterwheel-carousel .carousel-images img {
   display:none;
   cursor:pointer;
 }
-#waterwheel-carousel #carousel-controls #carousel-prev {
+#waterwheel-carousel .carousel-controls .carousel-prev {
   position:absolute;
   bottom:30px;
   left:30px;
 }
-#waterwheel-carousel #carousel-controls #carousel-next {
+#waterwheel-carousel .carousel-controls .carousel-next {
   position:absolute;
   bottom:30px;
   right:30px;
