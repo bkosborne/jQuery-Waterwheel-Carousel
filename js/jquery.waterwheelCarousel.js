@@ -40,7 +40,7 @@
         currentlyMoving:        false,
         itemsAnimating:         0,
         currentSpeed:           options.speed,
-        timeoutVar:             null
+        intervalTimer:             null
       }
 
       // Setup the carousel
@@ -59,25 +59,14 @@
        * automatically rotate it given the time in the options
        * Can clear the autoplay by passing in true
        */
-      function autoPlay(pause) {
-        // clear timeout
-        if (pause) {
-          data.timeoutVar = clearTimeout(data.timeoutVar);
-        } else {
-          // clear the timeout var if it exists
-          if (data.timeoutVar != null) {
-            data.timeoutVar = clearTimeout(data.timeoutVar);
-          }
-
-          // set interval for moving if autoplay is set
-          if (options.autoPlay != 0) {
-            data.timeoutVar = setTimeout(function () {
-              if (options.autoPlay > 0)
-                rotateCarousel(false,1);
-              else if (options.autoPlay < 0)
-                rotateCarousel(true,1);
-            }, options.autoPlay);
-          }
+      function autoPlay(stop) {
+        // clear interval
+        clearInterval(data.intervalTimer);
+        
+        if (!stop && options.autoPlay != 0) {
+          data.intervalTimer = setInterval(function () {
+            (options.autoPlay > 0) ? rotateCarousel(false,1) : rotateCarousel(true, 1);
+          },Math.abs(options.autoPlay));
         }
       }
 
@@ -454,8 +443,6 @@
             data.currentSpeed = options.speed;
             // Trigger custom 'moved to the center' event
             options.movedToCenter(data.currentCenterItem);
-            // call autoplay again
-            autoPlay();
           }
         }
       }
