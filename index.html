@@ -14,13 +14,41 @@
             // (use quotes only for string values, and no trailing comma after last option)
             // option: value,
             // option: value
-            autoPlay:-2000
+        });
+        $("#waterwheel-carousel-vertical").waterwheelCarousel({
+            // include options like this:
+            // (use quotes only for string values, and no trailing comma after last option)
+            // option: value,
+            // option: value
+            orientation: 'vertical',
+            startingItemSeparation: 100,
+            startingWaveSeparation: 40,
         });
       });
     </script>
   </head>
   <body>
     	<div id="waterwheel-carousel">
+        <div class="carousel-controls">
+        	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
+        	<div class="carousel-next"><a href="#">&gt; next</a></div>
+        </div>
+        <div class="carousel-images">
+          <img src="images/testImage1.png" alt="Test Image 1" />
+          <img src="images/testImage2.png" alt="Test Image 2" />
+          <img src="images/testImage3.png" alt="Test Image 3" />
+          <img src="images/testImage4.png" alt="Test Image 4" />
+          <img src="images/testImage5.png" alt="Test Image 5" />
+          <img src="images/testImage6.png" alt="Test Image 6" />
+          <img src="images/testImage7.png" alt="Test Image 7" />
+          <img src="images/testImage8.png" alt="Test Image 8" />
+          <img src="images/testImage9.png" alt="Test Image 9" />
+          <img src="images/testImage10.png" alt="Test Image 10" />
+          <img src="images/testImage11.png" alt="Test Image 11" />
+        </div>
+    	</div>
+    	<br />
+    	<div id="waterwheel-carousel-vertical">
         <div class="carousel-controls">
         	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
         	<div class="carousel-next"><a href="#">&gt; next</a></div>

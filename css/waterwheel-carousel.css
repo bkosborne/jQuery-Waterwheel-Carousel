@@ -24,3 +24,30 @@
   bottom:30px;
   right:30px;
 }
+
+#waterwheel-carousel-vertical {
+  width:330px;
+  background-color:#CCC;
+  height:800px;
+  font-family: Arial;
+  font-size:14px;
+  position:relative;
+  clear:both;
+}
+#waterwheel-carousel-vertical a {
+  color:#222;
+}
+#waterwheel-carousel-vertical .carousel-images img {
+  display:none;
+  cursor:pointer;
+}
+#waterwheel-carousel-vertical .carousel-controls .carousel-prev {
+  position:absolute;
+  bottom:30px;
+  left:30px;
+}
+#waterwheel-carousel-vertical .carousel-controls .carousel-next {
+  position:absolute;
+  bottom:30px;
+  right:30px;
+}
