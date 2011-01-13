@@ -526,6 +526,9 @@
        * the user passed in if the center item is clicked
        */
       $(this).find('.carousel-images img').live("click", function () {
+        // Remove autoplay
+        autoPlay(true);
+        
         var itemPosition = $(this).data().currentPosition;
         var rotations = Math.abs(itemPosition);
         if (itemPosition < 0) {
