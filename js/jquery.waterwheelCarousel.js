@@ -40,7 +40,7 @@
         currentlyMoving:        false,
         itemsAnimating:         0,
         currentSpeed:           options.speed,
-        intervalTimer:             null
+        intervalTimer:          null
       }
 
       // Setup the carousel
@@ -233,31 +233,6 @@
           counter++;
         }
       }
-
-      /*
-      function setupSlider() {
-        $("#slider").slider({
-          min:    1,
-          max:    data.items.length,
-          step:     1,
-          value:    options.startingItem,
-          animate:  true,
-          stop:    function () {
-            stopAnimations();
-            data.currentlyMoving = false;
-            var oldValue = $('#slider').slider('value');
-            var positionOfItem = data.items[oldValue-1].data().currentPosition;
-
-            if (positionOfItem < 0) {
-              rotateCarousel(true, Math.abs(positionOfItem));
-            } else if (positionOfItem > 0) {
-              rotateCarousel(false, positionOfItem);
-            }
-
-          }
-        });
-      }
-      */
 
       /**
        * Given the item and position, this function will calculate the new data
