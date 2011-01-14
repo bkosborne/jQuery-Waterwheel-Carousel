@@ -5,10 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Waterwheel Carousel Demonstration Test</title>
     <link rel="stylesheet" href="css/waterwheel-carousel.css" charset="utf-8" />
-    <link media="screen" rel="stylesheet" href="css/colorbox.css" />
     <script type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
     <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
-    <script type="text/javascript" src="js/jquery.colorbox.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         $("#waterwheel-carousel").waterwheelCarousel({
@@ -16,6 +14,29 @@
             // (use quotes only for string values, and no trailing comma after last option)
             // option: value,
             // option: value
+        });
+        $("#waterwheel-carousel-reversearch").waterwheelCarousel({
+            // include options like this:
+            // (use quotes only for string values, and no trailing comma after last option)
+            // option: value,
+            // option: value
+            startingWaveSeparation: -90,
+            waveSeparationFactor: .7,
+            centerOffset: 10,
+            startingItemSeparation: 120,
+            itemSeparationFactor: .9,
+            itemDecreaseFactor: .75
+        });
+        $("#waterwheel-carousel-horizon").waterwheelCarousel({
+            // include options like this:
+            // (use quotes only for string values, and no trailing comma after last option)
+            // option: value,
+            // option: value
+            startingWaveSeparation: 0,
+            centerOffset: 30,
+            startingItemSeparation: 150,
+            itemSeparationFactor: .7,
+            itemDecreaseFactor: .75
         });
         $("#waterwheel-carousel-vertical").waterwheelCarousel({
             // include options like this:
@@ -26,11 +47,84 @@
             startingItemSeparation: 100,
             startingWaveSeparation: 40,
         });
+        $("#waterwheel-carousel-flat").waterwheelCarousel({
+            // include options like this:
+            // (use quotes only for string values, and no trailing comma after last option)
+            // option: value,
+            // option: value
+            itemSeparationFactor: 1,
+            itemDecreaseFactor: 1,
+            waveSeparationFactor: 1,
+            startingWaveSeparation: 0,
+            startingItemSeparation: 280,
+            centerOffset: 10,
+            opacityDecreaseFactor: .3
+        });
       });
     </script>
   </head>
   <body>
     	<div id="waterwheel-carousel">
+        <div class="carousel-controls">
+        	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
+        	<div class="carousel-next"><a href="#">&gt; next</a></div>
+        </div>
+        <div class="carousel-images">
+          <img src="images/testImage1.png" alt="Test Image 1" />
+          <img src="images/testImage2.png" alt="Test Image 2" />
+          <img src="images/testImage3.png" alt="Test Image 3" />
+          <img src="images/testImage4.png" alt="Test Image 4" />
+          <img src="images/testImage5.png" alt="Test Image 5" />
+          <img src="images/testImage6.png" alt="Test Image 6" />
+          <img src="images/testImage7.png" alt="Test Image 7" />
+          <img src="images/testImage8.png" alt="Test Image 8" />
+          <img src="images/testImage9.png" alt="Test Image 9" />
+          <img src="images/testImage10.png" alt="Test Image 10" />
+          <img src="images/testImage11.png" alt="Test Image 11" />
+        </div>
+    	</div>
+    	<br />
+    	<div id="waterwheel-carousel-reversearch">
+        <div class="carousel-controls">
+        	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
+        	<div class="carousel-next"><a href="#">&gt; next</a></div>
+        </div>
+        <div class="carousel-images">
+          <img src="images/testImage1.png" alt="Test Image 1" />
+          <img src="images/testImage2.png" alt="Test Image 2" />
+          <img src="images/testImage3.png" alt="Test Image 3" />
+          <img src="images/testImage4.png" alt="Test Image 4" />
+          <img src="images/testImage5.png" alt="Test Image 5" />
+          <img src="images/testImage6.png" alt="Test Image 6" />
+          <img src="images/testImage7.png" alt="Test Image 7" />
+          <img src="images/testImage8.png" alt="Test Image 8" />
+          <img src="images/testImage9.png" alt="Test Image 9" />
+          <img src="images/testImage10.png" alt="Test Image 10" />
+          <img src="images/testImage11.png" alt="Test Image 11" />
+        </div>
+    	</div>
+    	<br />
+    	<div id="waterwheel-carousel-horizon">
+        <div class="carousel-controls">
+        	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
+        	<div class="carousel-next"><a href="#">&gt; next</a></div>
+        </div>
+        <div class="carousel-images">
+          <img src="images/testImage1.png" alt="Test Image 1" />
+          <img src="images/testImage2.png" alt="Test Image 2" />
+          <img src="images/testImage3.png" alt="Test Image 3" />
+          <img src="images/testImage4.png" alt="Test Image 4" />
+          <img src="images/testImage5.png" alt="Test Image 5" />
+          <img src="images/testImage6.png" alt="Test Image 6" />
+          <img src="images/testImage7.png" alt="Test Image 7" />
+          <img src="images/testImage8.png" alt="Test Image 8" />
+          <img src="images/testImage9.png" alt="Test Image 9" />
+          <img src="images/testImage10.png" alt="Test Image 10" />
+          <img src="images/testImage11.png" alt="Test Image 11" />
+        </div>
+    	</div>
+    	<br />
+    	<div id="waterwheel-carousel-flat">
         <div class="carousel-controls">
         	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
         	<div class="carousel-next"><a href="#">&gt; next</a></div>
