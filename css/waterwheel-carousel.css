@@ -15,7 +15,7 @@ Default Example
   color:#222;
 }
 #waterwheel-carousel .carousel-images img {
-  display:none;
+  visibility:hidden;
   cursor:pointer;
 }
 #waterwheel-carousel .carousel-controls .carousel-prev {
@@ -47,7 +47,7 @@ Completely Flat - Horizontal
   color:#222;
 }
 #waterwheel-carousel-flat .carousel-images img {
-  display:none;
+  visibility:hidden;
   cursor:pointer;
 }
 #waterwheel-carousel-flat .carousel-controls .carousel-prev {
@@ -79,7 +79,7 @@ Horizontal - High arch
   color:#222;
 }
 #waterwheel-carousel-reversearch .carousel-images img {
-  display:none;
+  visibility:hidden;
   cursor:pointer;
 }
 #waterwheel-carousel-reversearch .carousel-controls .carousel-prev {
@@ -111,7 +111,7 @@ Horizontal - Horizon
   color:#222;
 }
 #waterwheel-carousel-horizon .carousel-images img {
-  display:none;
+  visibility:hidden;
   cursor:pointer;
 }
 #waterwheel-carousel-horizon .carousel-controls .carousel-prev {
@@ -142,7 +142,7 @@ Vertical
   color:#222;
 }
 #waterwheel-carousel-vertical .carousel-images img {
-  display:none;
+  visibility:hidden;
   cursor:pointer;
 }
 #waterwheel-carousel-vertical .carousel-controls .carousel-prev {
