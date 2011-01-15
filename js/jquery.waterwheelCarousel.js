@@ -177,9 +177,10 @@
               $(this)
                 // Apply positioning and layering to the images
                 .css({
-                  left: newLeft,
-                  top: newTop,
-                  position: 'absolute',
+                  'left': newLeft,
+                  'top': newTop,
+                  'visibility': 'visible',
+                  'position': 'absolute',
                   'z-index': options.flankingItems+2,
                   'opacity': 1
                 })
