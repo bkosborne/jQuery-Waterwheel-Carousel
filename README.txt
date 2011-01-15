@@ -15,4 +15,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 CONTACT INFORMATION:
 
 BRIAN OSBORNE
-b.k.osborne@hotmail.com
+bkosborne.com/contact
