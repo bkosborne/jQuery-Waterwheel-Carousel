@@ -1,0 +1,25 @@
+=================================
+Version 1.2 - January 15 2011
+=================================
+- support for more than one carousel on a page
+- autoplay works properly
+- control box with previous next
+- added a bunch of example cases to index.html in release
+- internet explorer bugs fixed
+- changed HTML structure
+- lots of bug fixes
+
+=================================
+Version 1.1 - December 2010
+=================================
+- fixed some lines of code that prevented vertical carousel from working
+- added support for Facebox/Facybok jQuery plugins
+- adjusted the way movedToCenter works. Now it will call the event after ALL animations complete
+- added "linkHandling" option
+- animation performance enhanced by removing some calculations
+- various bug fixes
+
+=================================
+Version 1.0 - Februrary 2009
+=================================
+Original release
