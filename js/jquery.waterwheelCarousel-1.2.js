@@ -418,7 +418,8 @@
             // Reset the speed of the carousel to original
             data.currentSpeed = options.speed;
             // Trigger custom 'moved to the center' event
-            options.movedToCenter(data.currentCenterItem);
+            if (data.currentCenterItem !== null)
+              options.movedToCenter(data.currentCenterItem);
           }
         }
       }

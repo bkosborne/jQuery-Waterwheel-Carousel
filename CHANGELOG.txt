@@ -1,4 +1,9 @@
 =================================
+Version 1.2.1 - February 8 2011
+=================================
+- fixed bug in movedToCenter callback. Will not call for null item now.
+
+=================================
 Version 1.2 - January 15 2011
 =================================
 - support for more than one carousel on a page
