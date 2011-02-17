@@ -127,8 +127,8 @@
         // Start each array with the first starting value from the options
         data.itemDistances[0] = options.startingItemSeparation;
         data.waveDistances[0] = options.startingWaveSeparation;
-        data.itemWidths[0] = data.itemsContainer.find("img:first").attr('width');
-        data.itemHeights[0] = data.itemsContainer.find("img:first").attr('height');
+        data.itemWidths[0] = data.itemsContainer.find("img:first").width();
+        data.itemHeights[0] = data.itemsContainer.find("img:first").height();
         data.itemOpacities[0] = 1 * .75;
         // Then go thru and calculate the rest of the values all the way up to
         // either edge and beyond 1 (to account for the hidden items)
