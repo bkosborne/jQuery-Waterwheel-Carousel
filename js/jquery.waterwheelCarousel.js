@@ -155,7 +155,7 @@
        */
       function setupCarousel() {
         // Fill in a data array with jQuery objects of all the images
-        data.items = data.itemsContainer.find("img");
+        data.items = data.itemsContainer.find('img');
         for (var i = 0; i < data.items.length; i++) {
           data.items[i] = $(data.items[i]);
         }
@@ -163,7 +163,7 @@
         data.itemsContainer
           // Want the container to have relative positioning
           .css('position','relative')
-          .find("img")
+          .find('img')
             .each(function (i) {
               // Put all images in the center default position
               var newLeft,newTop;
@@ -188,15 +188,15 @@
                 // it's original form
                 .data({
                   currentPosition:  0,
-                  oldPosition:    0,
-                  width:        $(this).width(),
-                  owidth:       $(this).width(),
-                  height:       $(this).height(),
-                  oheight:      $(this).height(),
-                  top:        newTop,
-                  left:         newLeft,
-                  opacity:      1,
-                  index:        i
+                  oldPosition:      0,
+                  width:            $(this).width(),
+                  owidth:           $(this).width(),
+                  height:           $(this).height(),
+                  oheight:          $(this).height(),
+                  top:              newTop,
+                  left:             newLeft,
+                  opacity:          1,
+                  index:            i
                 })
                 // The image has been setup... Now we can show it
                 .show();
@@ -247,75 +247,62 @@
         var newDistanceFromCenter = Math.abs(newPosition);
 
         /** CALCULATE THE NEW WIDTH AND HEIGHT OF THE ITEM **/
-
-        /*
-          var oldWidth = $item.data().width, newWidth = $item.data().owidth;
-          var oldHeight = $item.data().height, newHeight = $item.data().oheight;
-          for (var i = 0; i < newDistanceFromCenter; i++) {
-            newWidth = newWidth * options.itemDecreaseFactor;
-            newHeight = newHeight * options.itemDecreaseFactor;
-          }
-          var widthDifference = Math.abs(oldWidth - newWidth);
-          var heightDifference = Math.abs(oldHeight - newHeight);
-          */
-
-          var newWidth = data.itemWidths[Math.abs(newPosition)];
-          var newHeight = data.itemHeights[Math.abs(newPosition)];
-          var widthDifference = Math.abs($item.data().width - newWidth);
-          var heightDifference = Math.abs($item.data().height - newHeight);
-
+        var newWidth = data.itemWidths[newDistanceFromCenter];
+        var newHeight = data.itemHeights[newDistanceFromCenter];
+        var widthDifference = Math.abs($item.data().width - newWidth);
+        var heightDifference = Math.abs($item.data().height - newHeight);
 
         /** CALCULATE THE NEW WAVE SEPARATION OF THE ITEM **/
-          var waveSeparation = 0, centeringNumber
-          // number to center item on horizon (vertical or horizontal)
-          if (options.orientation == "horizontal")
-            centeringNumber = heightDifference / 2;
-          else
-            centeringNumber = widthDifference / 2;
-          // Item growing
-          if ((newPosition > -1 && (newPosition < oldPosition)) || (newPosition < 1 && (newPosition > oldPosition))) {
-            // center item along the horizon
-            waveSeparation -= centeringNumber;
-            // now add the wave
-            waveSeparation += data.waveDistances[Math.abs(newPosition)];
-          // Item shrinking
-          } else if ((newPosition > -1 && (newPosition > oldPosition)) || (newPosition < 1 && (newPosition < oldPosition))) {
-            // center item along the horizon
-            waveSeparation += centeringNumber;
-            // now subtract the wave
-            waveSeparation -= data.waveDistances[Math.abs(newPosition) - 1];
+        var waveSeparation = 0, centeringNumber;
+        // number to center item on horizon (vertical or horizontal)
+        if (options.orientation == "horizontal")
+          centeringNumber = heightDifference / 2;
+        else
+          centeringNumber = widthDifference / 2;
+        // Item growing
+        if ((newPosition > -1 && (newPosition < oldPosition)) || (newPosition < 1 && (newPosition > oldPosition))) {
+          // center item along the horizon
+          waveSeparation -= centeringNumber;
+          // now add the wave
+          waveSeparation += data.waveDistances[Math.abs(newPosition)];
+        // Item shrinking
+        } else if ((newPosition > -1 && (newPosition > oldPosition)) || (newPosition < 1 && (newPosition < oldPosition))) {
+          // center item along the horizon
+          waveSeparation += centeringNumber;
+          // now subtract the wave
+          waveSeparation -= data.waveDistances[Math.abs(newPosition) - 1];
         }
 
         /** CALCULATE THE NEW ITEM SEPARATION OF THE ITEM **/
-          var itemSeparation = 0;
-          // if moving towards the center, the separation value will be different
-          // than if it were moving away from the center
-          if (Math.abs(newPosition) < Math.abs(oldPosition)) {
-            itemSeparation = data.itemDistances[Math.abs(newPosition)];
-          // if not moving towards center, just give it normal positioning
-          } else {
-            itemSeparation = data.itemDistances[Math.abs(newPosition)-1];
-          }
-          // Need to account for additional size separation only if the item is
-          // on the right side or moving to the center from the right side
-          if (newPosition > 0 || (newPosition == 0 && oldPosition == 1)) {
-            if (options.orientation == "horizontal")
-              itemSeparation += widthDifference;
-            else
-              itemSeparation += heightDifference;
-          }
-          // We want to separation to be negative if the image is going towards the left
-          if (newPosition < oldPosition) {
-            itemSeparation = itemSeparation * -1;
-          }
+        var itemSeparation = 0;
+        // if moving towards the center, the separation value will be different
+        // than if it were moving away from the center
+        if (Math.abs(newPosition) < Math.abs(oldPosition)) {
+          itemSeparation = data.itemDistances[Math.abs(newPosition)];
+        // if not moving towards center, just give it normal positioning
+        } else {
+          itemSeparation = data.itemDistances[Math.abs(newPosition)-1];
+        }
+        // Need to account for additional size separation only if the item is
+        // on the right side or moving to the center from the right side
+        if (newPosition > 0 || (newPosition == 0 && oldPosition == 1)) {
+          if (options.orientation == "horizontal")
+            itemSeparation += widthDifference;
+          else
+            itemSeparation += heightDifference;
+        }
+        // We want to separation to be negative if the image is going towards the left
+        if (newPosition < oldPosition) {
+          itemSeparation = itemSeparation * -1;
+        }
 
         /** CALCULATE NEW OPACITY OF THE ITEM **/
-          var newOpacity;
-          if (newPosition == 0) {
-            newOpacity = 1;
-          } else {
-            newOpacity = data.itemOpacities[Math.abs(newPosition)-1];
-          }
+        var newOpacity;
+        if (newPosition == 0) {
+          newOpacity = 1;
+        } else {
+          newOpacity = data.itemOpacities[Math.abs(newPosition)-1];
+        }
 
         // Figure out the new top and left values based on the orientation
         var newTop = $item.data().top;
@@ -349,12 +336,13 @@
       function moveItem($item, direction) {
         // Get old and new positions
         var oldPosition = $item.data('currentPosition'), newPosition;
+        
         if (direction == false) {
           newPosition = oldPosition - 1;
         } else {
           newPosition = oldPosition + 1;
         }
-
+        
         // Only want to physically move the item if it is within the boundaries
         // or in the first position just outside either boundary
         if (Math.abs(newPosition) <= options.flankingItems + 1) {
