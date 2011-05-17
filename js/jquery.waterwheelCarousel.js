@@ -129,7 +129,7 @@
         data.waveDistances[0] = options.startingWaveSeparation;
         data.itemWidths[0] = data.itemsContainer.find("img:first").width();
         data.itemHeights[0] = data.itemsContainer.find("img:first").height();
-        data.itemOpacities[0] = 1 * .75;
+        data.itemOpacities[0] = 1 * options.opacityDecreaseFactor;
         // Then go thru and calculate the rest of the values all the way up to
         // either edge and beyond 1 (to account for the hidden items)
         for (var i = 1; i < options.flankingItems+1; i++) {
@@ -352,6 +352,11 @@
           performCalculations($item, newPosition);
           // NOTE: After this method is called, the items data object has updated
           // position values
+          
+          // is item moving to center?
+          if (newPosition == 0) options.movingToCenter($item);
+          // is item moving away from center?
+          if (oldPosition == 0) options.movingFromCenter($item);
 
           // Change depth of item right away based on its new position
           $item.css('z-index',$item.data().depth);
@@ -551,8 +556,10 @@
     speed:                      300,    // speed in milliseconds it will take to rotate from one to the next
     animationEasing:            'linear',// the animation easing when rotating each item
     quickerForFurther:          true,   // set to true to make animations faster when clicking an item that is far away from the center
-    movedToCenter:              $.noop, // custom function executed when an item moves to the center
-    clickedCenter:              $.noop, // custom function executed when the center item is clicked
+    movingToCenter:             $.noop, // callback fired when an item is about to move to the center position
+    movedToCenter:              $.noop, // callback fired when an item has finished moving to the center
+    clickedCenter:              $.noop, // callback fired when the center item has been clicked
+    movingFromCenter:           $.noop, // callback fired when an item is about to leave the center position
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     orientation:                'horizontal' // indicate if the carousel should be horizontal or vertical
