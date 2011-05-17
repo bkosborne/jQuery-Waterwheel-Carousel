@@ -217,6 +217,8 @@
         
         // add active class to center item
         data.items[options.startingItem-1].addClass(options.activeClassName);
+        // fire movedToCenter callback manually - since this item never animates to the center
+        options.movedToCenter(data.items[options.startingItem-1]);
 
         var counter, itemNum, i;
         counter = 1;
