@@ -401,6 +401,11 @@
           // add active class to item
           $item.addClass(options.activeClassName);
         }
+        
+        // Was this item moved away from the center? fire callback
+        if ($item.data().oldPosition == 0) {
+          options.movedFromCenter($item);
+        }
 
         // Decrement one from the amount of items that are animating
         data.itemsAnimating--;
@@ -568,6 +573,7 @@
     movedToCenter:              $.noop, // callback fired when an item has finished moving to the center
     clickedCenter:              $.noop, // callback fired when the center item has been clicked
     movingFromCenter:           $.noop, // callback fired when an item is about to leave the center position
+    movedFromCenter:            $.noop, // callback fired when an item has finished moving from the center
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     orientation:                'horizontal', // indicate if the carousel should be horizontal or vertical
