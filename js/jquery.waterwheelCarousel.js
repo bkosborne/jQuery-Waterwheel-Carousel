@@ -214,6 +214,9 @@
       
         // We will be rotating the carousel, so we set the animation queue to one
         data.carouselRotationsLeft = 1;
+        
+        // add active class to center item
+        data.items[options.startingItem-1].addClass(options.activeClassName);
 
         var counter, itemNum, i;
         counter = 1;
@@ -356,7 +359,10 @@
           // is item moving to center?
           if (newPosition == 0) options.movingToCenter($item);
           // is item moving away from center?
-          if (oldPosition == 0) options.movingFromCenter($item);
+          if (oldPosition == 0) {
+            options.movingFromCenter($item); // fire callback
+            $item.removeClass(options.activeClassName);
+          }
 
           // Change depth of item right away based on its new position
           $item.css('z-index',$item.data().depth);
@@ -392,6 +398,8 @@
         // once we are positive all of the animations are complete
         if (newPosition == 0) {
           data.currentCenterItem = $item;
+          // add active class to item
+          $item.addClass(options.activeClassName);
         }
 
         // Decrement one from the amount of items that are animating
@@ -562,7 +570,8 @@
     movingFromCenter:           $.noop, // callback fired when an item is about to leave the center position
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
-    orientation:                'horizontal' // indicate if the carousel should be horizontal or vertical
+    orientation:                'horizontal', // indicate if the carousel should be horizontal or vertical
+    activeClassName:            'active' // the name of the class given to the current item in the center
   };
 
 })(jQuery);
