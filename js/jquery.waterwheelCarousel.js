@@ -553,6 +553,26 @@
         e.preventDefault();
         return false;
       });
+      
+      /**
+       * Navigation with arrow keys
+       */
+      if (options.keyboardNav) {
+        $(document).keydown(function(e) {
+          if (e.which == 37 || e.which == 38) {
+            // arrow left or up
+             rotateCarousel(true,1);
+          } else if (e.which == 39 || e.which == 40) {
+            // arrow right or down
+            rotateCarousel(false,1);
+          }
+          // should we override the normal functionality for the arrow keys?
+          if (options.keyboardNavOverride && (e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40)) {
+            e.preventDefault();
+            return false;
+          }
+        });
+      }
 
     });
 
@@ -579,7 +599,9 @@
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     orientation:                'horizontal', // indicate if the carousel should be horizontal or vertical
-    activeClassName:            'active' // the name of the class given to the current item in the center
+    activeClassName:            'active', // the name of the class given to the current item in the center
+    keyboardNav:                false,  // set to true to move the carousel with the arrow keys
+    keyboardNavOverride:        true   // set to true to override the normal functionality of the arrow keys (prevents scrolling)
   };
 
 })(jQuery);
