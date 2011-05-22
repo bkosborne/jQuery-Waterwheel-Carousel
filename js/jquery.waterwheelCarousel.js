@@ -51,7 +51,6 @@
         setupDistanceArrays();
         setupCarousel();
         setupStarterRotation();
-        autoPlay();
       });
 
       /**
@@ -60,11 +59,35 @@
        * Can clear the autoplay by passing in true
        */
       function autoPlay(stop) {
-        // clear interval
-        clearInterval(data.intervalTimer);
+        // clear timer
+        clearTimeout(data.autoPlayTimer);
         
         if (!stop && options.autoPlay != 0) {
-          data.intervalTimer = setInterval(function () {
+          // reverse the carousel if a wall has been hit
+          data.autoPlayTimer = setTimeout(function () {
+            // check if at a wall
+            var currentCenterIndex = data.currentCenterItem.data().index;
+            if (currentCenterIndex == (data.totalItems - 1) || currentCenterIndex == 0) {
+              // should we just reverse the rotation?
+              if (options.edgeReaction == 'reverse') {
+                options.autoPlay *= -1;
+              // or reset the carousel to the other edge
+              } else if (options.edgeReaction == 'reset') {
+                // we are looping the carousel way around to the other side quickly,
+                // so let's kill the timer until the animation is done
+                clearTimeout(data.autoPlayTimer);
+                
+                // figure out which way to loop it around
+                if (currentCenterIndex == (data.totalItems - 1) && options.autoPlay > 0) {
+                  // reset to the left
+                  rotateCarousel(true,data.totalItems-1);
+                } else if (currentCenterIndex == 0 && options.autoPlay < 0) {
+                  // reset to the right
+                  rotateCarousel(false,data.totalItems-1);
+                }
+              }
+
+            }
             (options.autoPlay > 0) ? rotateCarousel(false,1) : rotateCarousel(true, 1);
           },Math.abs(options.autoPlay));
         }
@@ -219,6 +242,8 @@
         data.items[options.startingItem-1].addClass(options.activeClassName);
         // fire movedToCenter callback manually - since this item never animates to the center
         options.movedToCenter(data.items[options.startingItem-1]);
+        // set current center item
+        data.currentCenterItem = data.items[options.startingItem-1];
 
         var counter, itemNum, i;
         counter = 1;
@@ -419,6 +444,7 @@
           // The carousel has finished rotating and is no longer moving
           data.currentlyMoving = false;
           // If there are still rotations left in the queue, rotate the carousel again
+          // we pass in zero because we don't want to add any additional rotations
           if (data.carouselRotationsLeft > 0) {
             rotateCarousel(direction, 0);
           // Otherwise there are no more rotations and...
@@ -428,6 +454,8 @@
             // Trigger custom 'moved to the center' event
             if (data.currentCenterItem !== null)
               options.movedToCenter(data.currentCenterItem);
+            // reset & initate the autoPlay
+            autoPlay();
           }
         }
       }
@@ -601,7 +629,8 @@
     orientation:                'horizontal', // indicate if the carousel should be horizontal or vertical
     activeClassName:            'active', // the name of the class given to the current item in the center
     keyboardNav:                false,  // set to true to move the carousel with the arrow keys
-    keyboardNavOverride:        true   // set to true to override the normal functionality of the arrow keys (prevents scrolling)
+    keyboardNavOverride:        true,   // set to true to override the normal functionality of the arrow keys (prevents scrolling)
+    edgeReaction:               'reset' // what does the carousel do when it reaches an edge? 'reset' cascades back to other edge, 'reverse' reverses movement
   };
 
 })(jQuery);
