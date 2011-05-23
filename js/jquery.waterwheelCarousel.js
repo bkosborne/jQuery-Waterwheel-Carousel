@@ -65,30 +65,7 @@
         if (!stop && options.autoPlay != 0) {
           // reverse the carousel if a wall has been hit
           data.autoPlayTimer = setTimeout(function () {
-            // check if at a wall
-            var currentCenterIndex = data.currentCenterItem.data().index;
-            if (currentCenterIndex == (data.totalItems - 1) || currentCenterIndex == 0) {
-              // should we just reverse the rotation?
-              if (options.edgeReaction == 'reverse') {
-                options.autoPlay *= -1;
-              // or reset the carousel to the other edge
-              } else if (options.edgeReaction == 'reset') {
-                // we are looping the carousel way around to the other side quickly,
-                // so let's kill the timer until the animation is done
-                clearTimeout(data.autoPlayTimer);
-                
-                // figure out which way to loop it around
-                if (currentCenterIndex == (data.totalItems - 1) && options.autoPlay > 0) {
-                  // reset to the left
-                  rotateCarousel(true,data.totalItems-1);
-                } else if (currentCenterIndex == 0 && options.autoPlay < 0) {
-                  // reset to the right
-                  rotateCarousel(false,data.totalItems-1);
-                }
-              }
-
-            }
-            (options.autoPlay > 0) ? rotateCarousel(false,1) : rotateCarousel(true, 1);
+            (options.autoPlay > 0) ? moveOnce(false) : moveOnce(true);
           },Math.abs(options.autoPlay));
         }
       }
@@ -531,6 +508,35 @@
           }
         }
       }
+      
+      /**
+       * These two functions are called anytime the carousel should move to the left
+       * or the right once. A check is make to see if an edge has been hit. If so,
+       * the carousel is reset to the other end
+       **/
+      function moveOnce(direction) {
+        var currentCenterIndex = data.currentCenterItem.data().index;
+        // check if the user is trying to go past an edge
+        if ((currentCenterIndex == 0 && direction == true) || (currentCenterIndex == (data.totalItems-1) && direction == false)) {
+          // kill the timer until the animation is done
+          clearTimeout(data.autoPlayTimer);
+          
+          if (options.edgeReaction == 'reset') {
+            // reset carousel to opposite side
+            rotateCarousel(!direction,data.totalItems-1);
+          } else if (options.edgeReaction == 'reverse' && options.autoPlay != 0) {
+            // auto play is on, and set to go backwards once
+            rotateCarousel(!direction,1);
+            // reverse autoplay
+            options.autoPlay *= -1;
+          } else {
+            // do nothing, user wants no reaction when an edge has been hit
+          }
+        // no edge hit, just move the carousel once
+        } else {
+          rotateCarousel(direction,1);
+        }
+      }
 
       /**
        * The event handler when an image within the carousel is clicked
@@ -541,6 +547,7 @@
       $(this).find('.carousel-images img').live("click", function () {
         // Remove autoplay
         autoPlay(true);
+        options.autoPlay = 0;
         
         var itemPosition = $(this).data().currentPosition;
         var rotations = Math.abs(itemPosition);
@@ -572,12 +579,12 @@
        * Event handlers for the optional carousel controls
        */
       $(this).find('.carousel-controls .carousel-prev').live('click',function (e) {
-        rotateCarousel(true,1);
+        moveOnce(true);
         e.preventDefault();
         return false;
       });
       $(this).find('.carousel-controls .carousel-next').live('click',function (e) {
-        rotateCarousel(false,1);
+        moveOnce(false);
         e.preventDefault();
         return false;
       });
@@ -589,10 +596,10 @@
         $(document).keydown(function(e) {
           if (e.which == 37 || e.which == 38) {
             // arrow left or up
-             rotateCarousel(true,1);
+            moveOnce(true);
           } else if (e.which == 39 || e.which == 40) {
             // arrow right or down
-            rotateCarousel(false,1);
+            moveOnce(false);
           }
           // should we override the normal functionality for the arrow keys?
           if (options.keyboardNavOverride && (e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40)) {
