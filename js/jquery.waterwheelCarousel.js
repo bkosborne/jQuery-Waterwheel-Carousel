@@ -1,6 +1,6 @@
 /*
  * Waterwheel Carousel
- * Version 1.2.3
+ * Version 1.3
  * http://www.bkosborne.com
  *
  * Copyright 2011 Brian Osborne
@@ -12,7 +12,7 @@
  * http://www.jquery.com
  *
  */
-(function($) {
+(function ($) {
 
   $.fn.waterwheelCarousel = function (options) {
 
@@ -41,7 +41,7 @@
         itemsAnimating:         0,
         currentSpeed:           options.speed,
         intervalTimer:          null
-      }
+      };
 
       // Setup the carousel
       beforeLoaded();
@@ -62,24 +62,28 @@
         // clear timer
         clearTimeout(data.autoPlayTimer);
         // as long as no stop command, and autoplay isn't zeroed...
-        if (!stop && options.autoPlay != 0) {
+        if (!stop && options.autoPlay !== 0) {
           // set timer...
           data.autoPlayTimer = setTimeout(function () {
             // to move the carousl in either direction...
-            (options.autoPlay > 0) ? moveOnce(false) : moveOnce(true);
-          },Math.abs(options.autoPlay));
+            if (options.autoPlay > 0) {
+              moveOnce(false);
+            } else {
+              moveOnce(true);
+            }
+          }, Math.abs(options.autoPlay));
         }
       }
 
       // get previous feature number - accounts for wrap around
       function getPreviousNum(num) {
-        var newNum = (num == 1) ? null : num--;
+        var newNum = (num === 1) ? null : num - 1;
         return newNum;
       }
 
       // get next feature number - accounts for wrap around
       function getNextNum(num) {
-        var newNum = (num == data.totalItems) ? null : num++;
+        var newNum = (num === data.totalItems) ? null : num + 1;
         return newNum;
       }
 
@@ -96,16 +100,14 @@
        * width and height of images (which can only be determined post-load)
        */
       function preload(callback) {
-        var $imageElements = data.itemsContainer.find('img');
-        var loadedImages = 0;
-        var totalImages = $imageElements.length;
+        var $imageElements = data.itemsContainer.find('img'), loadedImages = 0, totalImages = $imageElements.length;
 
         $imageElements.each(function () {
           // Attempt to load the images
           $(this).load(function () {
             // Add to number of images loaded and see if they are all done yet
-            loadedImages++;
-            if (loadedImages == totalImages) {
+            loadedImages += 1;
+            if (loadedImages === totalImages) {
               // All done, perform callback
               callback();
             }
@@ -130,17 +132,18 @@
         data.waveDistances[0] = options.startingWaveSeparation;
         data.itemWidths[0] = data.itemsContainer.find('img:first').width();
         data.itemHeights[0] = data.itemsContainer.find('img:first').height();
-        data.itemOpacities[0] = 1 * options.opacityDecreaseFactor;
+        data.itemOpacities[0] = (1 * options.opacityDecreaseFactor);
         // Then go thru and calculate the rest of the values all the way up to
         // either edge and beyond 1 (to account for the hidden items)
-        for (var i = 1; i < options.flankingItems+1; i++) {
+        var i;
+        for (i = 1; i < options.flankingItems + 1; i++) {
           data.itemDistances[i] = data.itemDistances[i-1] * options.itemSeparationFactor;
           data.waveDistances[i] = data.waveDistances[i-1] * options.waveSeparationFactor;
           data.itemWidths[i] = data.itemWidths[i-1] * options.itemDecreaseFactor;
           data.itemHeights[i] = data.itemHeights[i-1] * options.itemDecreaseFactor;
           data.itemOpacities[i] = data.itemOpacities[i-1] * options.opacityDecreaseFactor;
           // add one more for width and height
-          if (i == options.flankingItems) {
+          if (i === options.flankingItems) {
             data.itemWidths[i+1] = data.itemWidths[i] * options.itemDecreaseFactor;
             data.itemHeights[i+1] = data.itemHeights[i] * options.itemDecreaseFactor;
           }
@@ -157,7 +160,8 @@
       function setupCarousel() {
         // Fill in a data array with jQuery objects of all the images
         data.items = data.itemsContainer.find('img');
-        for (var i = 0; i < data.items.length; i++) {
+        var i;
+        for (i = 0; i < data.items.length; i++) {
           data.items[i] = $(data.items[i]);
         }
 
@@ -168,7 +172,7 @@
             .each(function (i) {
               // Put all images in the center default position
               var newLeft,newTop;
-              if (options.orientation == "horizontal") {
+              if (options.orientation === "horizontal") {
                 newLeft = (data.containerWidth / 2) - ($(this).width() / 2);
                 newTop = options.centerOffset;
               } else {
@@ -211,7 +215,7 @@
        */
       function setupStarterRotation() {
         // Do we need to calculate the starting item?
-        options.startingItem = (options.startingItem == 0) ? Math.round(data.totalItems / 2) : options.startingItem;
+        options.startingItem = (options.startingItem === 0) ? Math.round(data.totalItems / 2) : options.startingItem;
       
         // We will be rotating the carousel, so we set the animation queue to one
         data.carouselRotationsLeft = 1;
@@ -263,10 +267,11 @@
         /** CALCULATE THE NEW WAVE SEPARATION OF THE ITEM **/
         var waveSeparation = 0, centeringNumber;
         // number to center item on horizon (vertical or horizontal)
-        if (options.orientation == "horizontal")
+        if (options.orientation === "horizontal") {
           centeringNumber = heightDifference / 2;
-        else
+        } else {
           centeringNumber = widthDifference / 2;
+        }
         // Item growing
         if ((newPosition > -1 && (newPosition < oldPosition)) || (newPosition < 1 && (newPosition > oldPosition))) {
           // center item along the horizon
@@ -293,11 +298,12 @@
         }
         // Need to account for additional size separation only if the item is
         // on the right side or moving to the center from the right side
-        if (newPosition > 0 || (newPosition == 0 && oldPosition == 1)) {
-          if (options.orientation == "horizontal")
+        if (newPosition > 0 || (newPosition === 0 && oldPosition === 1)) {
+          if (options.orientation === "horizontal") {
             itemSeparation += widthDifference;
-          else
+          } else {
             itemSeparation += heightDifference;
+          }
         }
         // We want to separation to be negative if the image is going towards the left
         if (newPosition < oldPosition) {
@@ -306,7 +312,7 @@
 
         /** CALCULATE NEW OPACITY OF THE ITEM **/
         var newOpacity;
-        if (newPosition == 0) {
+        if (newPosition === 0) {
           newOpacity = 1;
         } else {
           newOpacity = data.itemOpacities[Math.abs(newPosition)-1];
@@ -315,7 +321,7 @@
         // Figure out the new top and left values based on the orientation
         var newTop = $item.data().top;
         var newLeft = $item.data().left;
-        if (options.orientation == "horizontal") {
+        if (options.orientation === "horizontal") {
           newTop = $item.data().top + waveSeparation;
           newLeft = $item.data().left + itemSeparation;
         } else {
@@ -345,7 +351,7 @@
         // Get old and new positions
         var oldPosition = $item.data('currentPosition'), newPosition;
         
-        if (direction == false) {
+        if (direction === false) {
           newPosition = oldPosition - 1;
         } else {
           newPosition = oldPosition + 1;
@@ -362,9 +368,9 @@
           // position values
           
           // is item moving to center?
-          if (newPosition == 0) options.movingToCenter($item);
+          if (newPosition === 0) { options.movingToCenter($item); }
           // is item moving away from center?
-          if (oldPosition == 0) {
+          if (oldPosition === 0) {
             options.movingFromCenter($item); // fire callback
             $item.removeClass(options.activeClassName);
           }
@@ -401,14 +407,14 @@
         // If the item moved to the center position, change the data indicating so
         // We simply need to keep track of it so we can call the moved to center event
         // once we are positive all of the animations are complete
-        if (newPosition == 0) {
+        if (newPosition === 0) {
           data.currentCenterItem = $item;
           // add active class to item
           $item.addClass(options.activeClassName);
         }
         
         // Was this item moved away from the center? fire callback
-        if ($item.data().oldPosition == 0) {
+        if ($item.data().oldPosition === 0) {
           options.movedFromCenter($item);
         }
 
@@ -416,7 +422,7 @@
         data.itemsAnimating--;
         // If there are no more items left animating, that means that all the items within
         // the carousel have finished animating
-        if (data.itemsAnimating == 0) {
+        if (data.itemsAnimating === 0) {
           // Decrement one from the amount of rotations the carousel has made
           data.carouselRotationsLeft -= 1;
           // The carousel has finished rotating and is no longer moving
@@ -430,8 +436,9 @@
             // Reset the speed of the carousel to original
             data.currentSpeed = options.speed;
             // Trigger custom 'moved to the center' event
-            if (data.currentCenterItem !== null)
+            if (data.currentCenterItem !== null) {
               options.movedToCenter(data.currentCenterItem);
+            }
             // reset & initate the autoPlay
             autoPlay();
           }
@@ -439,7 +446,8 @@
       }
 
       function stopAnimations() {
-        for (var i = 0; i < data.items.length; i++) {
+        var i;
+        for (i = 0; i < data.items.length; i++) {
           data.items[i].stop();
         }
       }
@@ -447,15 +455,18 @@
       // Short function to determine if a rotation is allowed or not
       function rotationAllowed(direction) {
         // Deny if currently moving already
-        if (data.currentlyMoving == true)
+        if (data.currentlyMoving === true) {
           return false;
+        }
         // Deny if trying to move to right and already at right-most item
-        if (direction == true && data.items[0].data().currentPosition == 0)
+        if (direction === true && data.items[0].data().currentPosition === 0) {
           return false;
+        }
         // Deny if trying to move to left and already at left-most item
-        if (direction == false && data.items[data.totalItems-1].data().currentPosition == 0)
+        if (direction === false && data.items[data.totalItems-1].data().currentPosition === 0) {
           return false;
-
+        }
+        
         // Everything is OKAY
         return true;
       }
@@ -477,7 +488,7 @@
           // Add given rotations to queue
           data.carouselRotationsLeft += rotations;
           
-          if (options.quickerForFurther == true) {
+          if (options.quickerForFurther === true) {
 	          // Figure out how fast the carousel should rotate
 	          if (rotations > 1) {
 	            data.currentSpeed = options.speed / rotations;
@@ -485,11 +496,12 @@
 	          // Assure the speed is above the minimum to avoid weird results
 	          data.currentSpeed = (data.currentSpeed < 100) ? 100 : data.currentSpeed;
           } else {
-          	data.currentSpeed = options.speed;
+            data.currentSpeed = options.speed;
           }
 
           // Iterate thru each item and move it
-          for (var i = 0; i < data.items.length; i++) {
+          var i;
+          for (i = 0; i < data.items.length; i++) {
             var $item = $(data.items[i]);
             var currentPosition = $item.data().currentPosition;
             // Only move items that are within the boundaries of the carousel
@@ -500,7 +512,7 @@
             // we don't want to move it, but we want to increment it's position
             } else {
               $item.data('oldPosition',currentPosition);
-              if (direction == true) {
+              if (direction === true) {
                 $item.data('currentPosition',currentPosition+1);
               } else {
                 $item.data('currentPosition',currentPosition-1);
@@ -518,20 +530,18 @@
       function moveOnce(direction) {
         var currentCenterIndex = data.currentCenterItem.data().index;
         // check if the user is trying to go past an edge
-        if ((currentCenterIndex == 0 && direction == true) || (currentCenterIndex == (data.totalItems-1) && direction == false)) {
+        if ((currentCenterIndex === 0 && direction === true) || (currentCenterIndex === (data.totalItems-1) && direction === false)) {
           // kill the timer until the animation is done
           clearTimeout(data.autoPlayTimer);
           
-          if (options.edgeReaction == 'reset') {
+          if (options.edgeReaction === 'reset') {
             // reset carousel to opposite side
             rotateCarousel(!direction,data.totalItems-1);
-          } else if (options.edgeReaction == 'reverse' && options.autoPlay != 0) {
+          } else if (options.edgeReaction === 'reverse' && options.autoPlay !== 0) {
             // auto play is on, and set to go backwards once
             rotateCarousel(!direction,1);
             // reverse autoplay
             options.autoPlay *= -1;
-          } else {
-            // do nothing, user wants no reaction when an edge has been hit
           }
         // no edge hit, just move the carousel once
         } else {
@@ -566,10 +576,10 @@
        * make sure that they aren't active for certain situations
        */
       $(this).find('.carousel-images a').live("click", function (event) {
-        var isCenter = ($(this).find('img').width() == $(this).find('img').data().owidth) ? true : false;
+        var isCenter = ($(this).find('img').width() === $(this).find('img').data().owidth) ? true : false;
         // should we disable the links?
-        if (options.linkHandling == 1 || // turn off all links
-            (options.linkHandling == 2 && !isCenter)) // turn off all links except center
+        if (options.linkHandling === 1 || // turn off all links
+            (options.linkHandling === 2 && !isCenter)) // turn off all links except center
         {
           event.preventDefault();
           return false;
@@ -595,15 +605,15 @@
        */
       if (options.keyboardNav) {
         $(document).keydown(function(e) {
-          if (e.which == 37 || e.which == 38) {
+          if (e.which === 37 || e.which === 38) {
             // arrow left or up
             moveOnce(true);
-          } else if (e.which == 39 || e.which == 40) {
+          } else if (e.which === 39 || e.which === 40) {
             // arrow right or down
             moveOnce(false);
           }
           // should we override the normal functionality for the arrow keys?
-          if (options.keyboardNavOverride && (e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40)) {
+          if (options.keyboardNavOverride && (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40)) {
             e.preventDefault();
             return false;
           }
@@ -617,11 +627,11 @@
     // number tweeks to change apperance
     startingItem:               0,      // item to place in the center at the start, set to zero to be the middle item
     startingItemSeparation:     150,    // the starting separation distance between each item
-    itemSeparationFactor:       .5,     // determines how drastically the item separation decreases
+    itemSeparationFactor:       0.5,     // determines how drastically the item separation decreases
     startingWaveSeparation:     30,     // the starting separation distance for the wave
-    waveSeparationFactor:       .75,    // determines how drastically the wave separation decreases
-    itemDecreaseFactor:         .8,     // determines how drastically the item's width and height decrease
-    opacityDecreaseFactor:      .5,     // determines how drastically the item's opacity decreases
+    waveSeparationFactor:       0.75,    // determines how drastically the wave separation decreases
+    itemDecreaseFactor:         0.8,     // determines how drastically the item's width and height decrease
+    opacityDecreaseFactor:      0.5,     // determines how drastically the item's opacity decreases
     centerOffset:               40,     // the number of pixels to offset the center item in the carousel
     flankingItems:              4,      // the number of items visible on either side of the center
     
