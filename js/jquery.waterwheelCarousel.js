@@ -61,10 +61,11 @@
       function autoPlay(stop) {
         // clear timer
         clearTimeout(data.autoPlayTimer);
-        
+        // as long as no stop command, and autoplay isn't zeroed...
         if (!stop && options.autoPlay != 0) {
-          // reverse the carousel if a wall has been hit
+          // set timer...
           data.autoPlayTimer = setTimeout(function () {
+            // to move the carousl in either direction...
             (options.autoPlay > 0) ? moveOnce(false) : moveOnce(true);
           },Math.abs(options.autoPlay));
         }
@@ -85,7 +86,7 @@
       // We want to hide all the images to make sure the viewer doesn't
       // see them before the carousel moves them to proper positions
       function beforeLoaded() {
-        data.itemsContainer.find("img").hide();
+        data.itemsContainer.find('img').hide();
       }
 
       /**
@@ -95,7 +96,7 @@
        * width and height of images (which can only be determined post-load)
        */
       function preload(callback) {
-        var $imageElements = data.itemsContainer.find("img");
+        var $imageElements = data.itemsContainer.find('img');
         var loadedImages = 0;
         var totalImages = $imageElements.length;
 
@@ -127,8 +128,8 @@
         // Start each array with the first starting value from the options
         data.itemDistances[0] = options.startingItemSeparation;
         data.waveDistances[0] = options.startingWaveSeparation;
-        data.itemWidths[0] = data.itemsContainer.find("img:first").width();
-        data.itemHeights[0] = data.itemsContainer.find("img:first").height();
+        data.itemWidths[0] = data.itemsContainer.find('img:first').width();
+        data.itemHeights[0] = data.itemsContainer.find('img:first').height();
         data.itemOpacities[0] = 1 * options.opacityDecreaseFactor;
         // Then go thru and calculate the rest of the values all the way up to
         // either edge and beyond 1 (to account for the hidden items)
@@ -610,10 +611,10 @@
       }
 
     });
-
   };
 
   $.fn.waterwheelCarousel.defaults = {
+    // number tweeks to change apperance
     startingItem:               0,      // item to place in the center at the start, set to zero to be the middle item
     startingItemSeparation:     150,    // the starting separation distance between each item
     itemSeparationFactor:       .5,     // determines how drastically the item separation decreases
@@ -623,21 +624,27 @@
     opacityDecreaseFactor:      .5,     // determines how drastically the item's opacity decreases
     centerOffset:               40,     // the number of pixels to offset the center item in the carousel
     flankingItems:              4,      // the number of items visible on either side of the center
+    
+    // animation
     speed:                      300,    // speed in milliseconds it will take to rotate from one to the next
     animationEasing:            'linear',// the animation easing when rotating each item
     quickerForFurther:          true,   // set to true to make animations faster when clicking an item that is far away from the center
-    movingToCenter:             $.noop, // callback fired when an item is about to move to the center position
-    movedToCenter:              $.noop, // callback fired when an item has finished moving to the center
-    clickedCenter:              $.noop, // callback fired when the center item has been clicked
-    movingFromCenter:           $.noop, // callback fired when an item is about to leave the center position
-    movedFromCenter:            $.noop, // callback fired when an item has finished moving from the center
+    
+    // misc
     linkHandling:               2,      // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,      // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     orientation:                'horizontal', // indicate if the carousel should be horizontal or vertical
     activeClassName:            'active', // the name of the class given to the current item in the center
     keyboardNav:                false,  // set to true to move the carousel with the arrow keys
     keyboardNavOverride:        true,   // set to true to override the normal functionality of the arrow keys (prevents scrolling)
-    edgeReaction:               'reset' // what does the carousel do when it reaches an edge? 'reset' cascades back to other edge, 'reverse' reverses movement
+    edgeReaction:               'reset', // what does the carousel do when it reaches an edge? accepted: reset/reverse/nothing
+    
+    // callback functions
+    movingToCenter:             $.noop, // fired when an item is about to move to the center position
+    movedToCenter:              $.noop, // fired when an item has finished moving to the center
+    clickedCenter:              $.noop, // fired when the center item has been clicked
+    movingFromCenter:           $.noop, // fired when an item is about to leave the center position
+    movedFromCenter:            $.noop  // fired when an item has finished moving from the center
   };
 
 })(jQuery);
