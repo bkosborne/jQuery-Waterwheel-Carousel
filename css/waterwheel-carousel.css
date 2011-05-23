@@ -1,3 +1,13 @@
+body {
+  font-family:Arial;
+  font-size:12px;
+}
+div.example-desc {
+  margin:3px 0;
+  padding:5px;
+  background-color:#EFEFEF;
+}
+
 /********************
 Default Example
 *********************/

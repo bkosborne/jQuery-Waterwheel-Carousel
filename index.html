@@ -6,7 +6,7 @@
     <title>Waterwheel Carousel Demonstration Test</title>
     <link rel="stylesheet" href="css/waterwheel-carousel.css" charset="utf-8" />
     <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.waterwheelCarousel.min.js"></script>
+    <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         $("#waterwheel-carousel-default").waterwheelCarousel();
@@ -25,7 +25,9 @@
             centerOffset: 30,
             startingItemSeparation: 150,
             itemSeparationFactor: .7,
-            itemDecreaseFactor: .75
+            itemDecreaseFactor: .75,
+            opacityDecreaseFactor: 1,
+            autoPlay: 1500
         });
         
         $("#waterwheel-carousel-flat").waterwheelCarousel({
@@ -35,19 +37,25 @@
             startingWaveSeparation: 0,
             startingItemSeparation: 280,
             centerOffset: 10,
-            opacityDecreaseFactor: .3
+            opacityDecreaseFactor: .3,
+            autoPlay: 3000,
+            edgeReaction: 'reverse'
         });
         
         $("#waterwheel-carousel-vertical").waterwheelCarousel({
             orientation: 'vertical',
             startingItemSeparation: 100,
-            startingWaveSeparation: 40
+            startingWaveSeparation: 40,
+            autoPlay: 2000
         });
 
       });
     </script>
   </head>
   <body>
+    <div class="example-desc">
+      Default demonstration - no options overriden.
+    </div>
     <!-- BEGIN COPYING HERE -->
     <div id="waterwheel-carousel-default">
       <div class="carousel-controls">
@@ -72,6 +80,9 @@
     
     <br />
     
+    <div class="example-desc">
+      High arch effect
+    </div>
     <!-- BEGIN COPYING HERE -->
     <div id="waterwheel-carousel-higharch">
       <div class="carousel-controls">
@@ -96,6 +107,9 @@
     
     <br />
     
+    <div class="example-desc">
+      Items kept on horizontal plane, opacity turned off, autoplay on
+    </div>
     <!-- BEGIN COPYING HERE -->
     <div id="waterwheel-carousel-horizon">
       <div class="carousel-controls">
@@ -120,6 +134,9 @@
     
     <br />
     
+    <div class="example-desc">
+      Completely flat, no 3d effect, slow autoplay with reverse instead of reset edge reaction
+    </div>
     <!-- BEGIN COPYING HERE -->
     <div id="waterwheel-carousel-flat">
       <div class="carousel-controls">
@@ -144,6 +161,9 @@
     
     <br />
     
+    <div class="example-desc">
+      Waterfall effect (vertical orientation), autoplay turned on
+    </div>
     <!-- BEGIN COPYING HERE -->
     <div id="waterwheel-carousel-vertical">
       <div class="carousel-controls">
