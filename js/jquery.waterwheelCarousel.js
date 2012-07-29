@@ -33,8 +33,9 @@
         items:                  [],
         itemDistances:          [],
         waveDistances:          [],
-        itemWidths:             [],
-        itemHeights:            [],
+        itemFactor:             [],
+        itemWidths:             {},
+        itemHeights:            {},
         itemOpacities:          [],
         carouselRotationsLeft:  0,
         currentlyMoving:        false,
@@ -130,26 +131,31 @@
         // Start each array with the first starting value from the options
         data.itemDistances[0] = options.startingItemSeparation;
         data.waveDistances[0] = options.startingWaveSeparation;
-        data.itemWidths[0] = data.itemsContainer.find('img:first').width();
-        data.itemHeights[0] = data.itemsContainer.find('img:first').height();
+        data.itemFactor[0] = 1;
         data.itemOpacities[0] = (1 * options.opacityDecreaseFactor);
+		data.itemsContainer.find('img').each(function(index, item) {
+			item = $(item);
+			var width = item.width();
+			var height = item.height();
+			data.itemWidths[item.attr('src')] = width;
+			data.itemHeights[item.attr('src')] = height;
+		});
         // Then go thru and calculate the rest of the values all the way up to
         // either edge and beyond 1 (to account for the hidden items)
         var i;
         for (i = 1; i < options.flankingItems + 1; i++) {
           data.itemDistances[i] = data.itemDistances[i-1] * options.itemSeparationFactor;
           data.waveDistances[i] = data.waveDistances[i-1] * options.waveSeparationFactor;
-          data.itemWidths[i] = data.itemWidths[i-1] * options.itemDecreaseFactor;
-          data.itemHeights[i] = data.itemHeights[i-1] * options.itemDecreaseFactor;
+		  data.itemFactor[i]  = data.itemFactor[i-1] * options.itemDecreaseFactor;
           data.itemOpacities[i] = data.itemOpacities[i-1] * options.opacityDecreaseFactor;
           // add one more for width and height
           if (i === options.flankingItems) {
-            data.itemWidths[i+1] = data.itemWidths[i] * options.itemDecreaseFactor;
-            data.itemHeights[i+1] = data.itemHeights[i] * options.itemDecreaseFactor;
+			data.itemFactor[i+1]  = data.itemFactor[i] * options.itemDecreaseFactor;
           }
         }
         // The last opacity should be zero
         data.itemOpacities[data.itemOpacities.length-1] = 0;
+		console.log('---');
       }
 
       /**
@@ -259,8 +265,12 @@
         var newDistanceFromCenter = Math.abs(newPosition);
 
         /** CALCULATE THE NEW WIDTH AND HEIGHT OF THE ITEM **/
-        var newWidth = data.itemWidths[newDistanceFromCenter];
-        var newHeight = data.itemHeights[newDistanceFromCenter];
+		var newWidth = data.itemFactor[newDistanceFromCenter] * data.itemWidths[$item];
+        var newHeight = data.itemFactor[newDistanceFromCenter] * data.itemHeights[$item];
+        var newWidth = data.itemWidths[$item.attr('src')];
+        var newHeight = data.itemHeights[$item.attr('src')];
+		console.log($item.get(0));
+		console.log(newWidth);
         var widthDifference = Math.abs($item.data().width - newWidth);
         var heightDifference = Math.abs($item.data().height - newHeight);
 
