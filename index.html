@@ -5,49 +5,49 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Waterwheel Carousel Demonstration Test</title>
     <link rel="stylesheet" href="css/waterwheel-carousel.css" charset="utf-8" />
-    <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.waterwheelCarousel.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         $("#waterwheel-carousel-default").waterwheelCarousel();
         
-        $("#waterwheel-carousel-higharch").waterwheelCarousel({
-            startingWaveSeparation: -90,
-            waveSeparationFactor: .7,
-            centerOffset: 10,
-            startingItemSeparation: 120,
-            itemSeparationFactor: .9,
-            itemDecreaseFactor: .75
-        });
-        
-        $("#waterwheel-carousel-horizon").waterwheelCarousel({
-            startingWaveSeparation: 0,
-            centerOffset: 30,
-            startingItemSeparation: 150,
-            itemSeparationFactor: .7,
-            itemDecreaseFactor: .75,
-            opacityDecreaseFactor: 1,
-            autoPlay: 1500
-        });
-        
-        $("#waterwheel-carousel-flat").waterwheelCarousel({
-            itemSeparationFactor: 1,
-            itemDecreaseFactor: 1,
-            waveSeparationFactor: 1,
-            startingWaveSeparation: 0,
-            startingItemSeparation: 280,
-            centerOffset: 10,
-            opacityDecreaseFactor: .3,
-            autoPlay: 3000,
-            edgeReaction: 'reverse'
-        });
-        
-        $("#waterwheel-carousel-vertical").waterwheelCarousel({
-            orientation: 'vertical',
-            startingItemSeparation: 100,
-            startingWaveSeparation: 40,
-            autoPlay: 2000
-        });
+        //$("#waterwheel-carousel-higharch").waterwheelCarousel({
+        //    startingWaveSeparation: -90,
+        //    waveSeparationFactor: .7,
+        //    centerOffset: 10,
+        //    startingItemSeparation: 120,
+        //    itemSeparationFactor: .9,
+        //    itemDecreaseFactor: .75
+        //});
+        //
+        //$("#waterwheel-carousel-horizon").waterwheelCarousel({
+        //    startingWaveSeparation: 0,
+        //    centerOffset: 30,
+        //    startingItemSeparation: 150,
+        //    itemSeparationFactor: .7,
+        //    itemDecreaseFactor: .75,
+        //    opacityDecreaseFactor: 1,
+        //    autoPlay: 1500
+        //});
+        //
+        //$("#waterwheel-carousel-flat").waterwheelCarousel({
+        //    itemSeparationFactor: 1,
+        //    itemDecreaseFactor: 1,
+        //    waveSeparationFactor: 1,
+        //    startingWaveSeparation: 0,
+        //    startingItemSeparation: 280,
+        //    centerOffset: 10,
+        //    opacityDecreaseFactor: .3,
+        //    autoPlay: 3000,
+        //    edgeReaction: 'reverse'
+        //});
+        //
+        //$("#waterwheel-carousel-vertical").waterwheelCarousel({
+        //    orientation: 'vertical',
+        //    startingItemSeparation: 100,
+        //    startingWaveSeparation: 40,
+        //    autoPlay: 2000
+        //});
 
       });
     </script>
@@ -63,17 +63,15 @@
       	<div class="carousel-next"><a href="#">&gt; next</a></div>
       </div>
       <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" />
-        <img src="images/testImage2.png" alt="Test Image 2" />
-        <img src="images/testImage3.png" alt="Test Image 3" />
-        <img src="images/testImage4.png" alt="Test Image 4" />
-        <img src="images/testImage5.png" alt="Test Image 5" />
+        <img src="images/testImage1.png" alt="Test Image 1" id="item1"/>
+        <img src="images/testImage2.png" alt="Test Image 2" id="item2" />
+        <img src="images/testImage3.png" alt="Test Image 3" id="item3" />
+        <img src="images/testImage4.png" alt="Test Image 4" id="item4" />
+        <img src="images/testImage5.png" alt="Test Image 5" id="item5" />
         <img src="images/testImage6.png" alt="Test Image 6" />
         <img src="images/testImage7.png" alt="Test Image 7" />
         <img src="images/testImage8.png" alt="Test Image 8" />
         <img src="images/testImage9.png" alt="Test Image 9" />
-        <img src="images/testImage10.png" alt="Test Image 10" />
-        <img src="images/testImage11.png" alt="Test Image 11" />
       </div>
     </div>
     <!-- END COPYING HERE -->

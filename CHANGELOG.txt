@@ -1,4 +1,13 @@
 =================================
+Version 2.0 - Feb 2013
+=================================
+- first image in DOM now placed in center by default
+- some options renamed, with their meanings changed. See options descriptions for info
+- code cleanup, some inefficiencies removed
+- full support for circular rotation - and thus removed the edgeReaction configuration
+- updated jQuery to 1.8.3
+
+=================================
 Version 1.3 - May 22 2011
 =================================
 - three new callbacks: movingToCenter, movingFromCenter, and movedFromCenter
