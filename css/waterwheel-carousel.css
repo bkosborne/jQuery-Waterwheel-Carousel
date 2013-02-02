@@ -1,168 +1,37 @@
 body {
   font-family:Arial;
   font-size:12px;
+  background:#ededed;
 }
-div.example-desc {
+.example-desc {
   margin:3px 0;
   padding:5px;
-  background-color:#EFEFEF;
 }
 
-/********************
-Default Example
-*********************/
-#waterwheel-carousel-default {
+#carousel {
   width:960px;
-  background-color:#CCC;
-  border:1px solid #222;
-  height:250px;
-  font-family: Arial;
-  font-size:14px;
-  position:relative;
-  clear:both;
-}
-#waterwheel-carousel-default a {
-  color:#222;
-}
-#waterwheel-carousel-default .carousel-images img {
-  visibility:hidden;
-  cursor:pointer;
-}
-#waterwheel-carousel-default .carousel-controls .carousel-prev {
-  position:absolute;
-  bottom:30px;
-  left:30px;
-}
-#waterwheel-carousel-default .carousel-controls .carousel-next {
-  position:absolute;
-  bottom:30px;
-  right:30px;
-}
-
-/********************
-High Arch
-*********************/
-#waterwheel-carousel-higharch {
-  width:960px;
-  background-color:#CCC;
   border:1px solid #222;
   height:300px;
-  font-family: Arial;
-  font-size:14px;
   position:relative;
   clear:both;
   overflow:hidden;
+  background:#FFF;
 }
-#waterwheel-carousel-higharch a {
-  color:#222;
-}
-#waterwheel-carousel-higharch .carousel-images img {
-  visibility:hidden;
-  cursor:pointer;
-}
-#waterwheel-carousel-higharch .carousel-controls .carousel-prev {
-  position:absolute;
-  bottom:50px;
-  left:30px;
-}
-#waterwheel-carousel-higharch .carousel-controls .carousel-next {
-  position:absolute;
-  bottom:50px;
-  right:30px;
+#carousel img {
+  visibility:hidden; /* hide images until carousel can handle them */
+  cursor:pointer; /* otherwise it's not as obvious items can be clicked */
 }
 
-/********************
-Horizon
-*********************/
-#waterwheel-carousel-horizon {
-  width:960px;
-  background-color:#CCC;
-  border:1px solid #222;
+.split-left {
+  width:400px;
+  float:left;
+}
+.split-right {
+  width:400px;
+  float:left;
+  margin-left:10px;
+}
+#callback-output {
   height:250px;
-  font-family: Arial;
-  font-size:14px;
-  position:relative;
-  clear:both;
-  overflow:hidden;
-}
-#waterwheel-carousel-horizon a {
-  color:#222;
-}
-#waterwheel-carousel-horizon .carousel-images img {
-  visibility:hidden;
-  cursor:pointer;
-}
-#waterwheel-carousel-horizon .carousel-controls .carousel-prev {
-  position:absolute;
-  bottom:20px;
-  left:30px;
-}
-#waterwheel-carousel-horizon .carousel-controls .carousel-next {
-  position:absolute;
-  bottom:20px;
-  right:30px;
-}
-
-/********************
-Flat
-*********************/
-#waterwheel-carousel-flat {
-  width:960px;
-  background-color:#CCC;
-  border:1px solid #222;
-  height:250px;
-  font-family: Arial;
-  font-size:14px;
-  position:relative;
-  clear:both;
-  overflow:hidden;
-}
-#waterwheel-carousel-flat a {
-  color:#222;
-}
-#waterwheel-carousel-flat .carousel-images img {
-  visibility:hidden;
-  cursor:pointer;
-}
-#waterwheel-carousel-flat .carousel-controls .carousel-prev {
-  position:absolute;
-  bottom:20px;
-  left:30px;
-}
-#waterwheel-carousel-flat .carousel-controls .carousel-next {
-  position:absolute;
-  bottom:20px;
-  right:30px;
-}
-
-
-/********************
-Vertical
-*********************/
-#waterwheel-carousel-vertical {
-  width:330px;
-  background-color:#CCC;
-  border:1px solid #222;
-  height:600px;
-  font-family: Arial;
-  font-size:14px;
-  position:relative;
-  clear:both;
-}
-#waterwheel-carousel-vertical a {
-  color:#222;
-}
-#waterwheel-carousel-vertical .carousel-images img {
-  visibility:hidden;
-  cursor:pointer;
-}
-#waterwheel-carousel-vertical .carousel-controls .carousel-prev {
-  position:absolute;
-  top:30px;
-  right:30px;
-}
-#waterwheel-carousel-vertical .carousel-controls .carousel-next {
-  position:absolute;
-  bottom:30px;
-  right:30px;
+  overflow:scroll;
 }

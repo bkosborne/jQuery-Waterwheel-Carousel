@@ -1,188 +1,100 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Waterwheel Carousel Demonstration Test</title>
+    <title>Waterwheel Carousel Demo</title>
     <link rel="stylesheet" href="css/waterwheel-carousel.css" charset="utf-8" />
-    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.waterwheelCarousel.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
-        $("#waterwheel-carousel-default").waterwheelCarousel();
-        
-        //$("#waterwheel-carousel-higharch").waterwheelCarousel({
-        //    startingWaveSeparation: -90,
-        //    waveSeparationFactor: .7,
-        //    centerOffset: 10,
-        //    startingItemSeparation: 120,
-        //    itemSeparationFactor: .9,
-        //    itemDecreaseFactor: .75
-        //});
-        //
-        //$("#waterwheel-carousel-horizon").waterwheelCarousel({
-        //    startingWaveSeparation: 0,
-        //    centerOffset: 30,
-        //    startingItemSeparation: 150,
-        //    itemSeparationFactor: .7,
-        //    itemDecreaseFactor: .75,
-        //    opacityDecreaseFactor: 1,
-        //    autoPlay: 1500
-        //});
-        //
-        //$("#waterwheel-carousel-flat").waterwheelCarousel({
-        //    itemSeparationFactor: 1,
-        //    itemDecreaseFactor: 1,
-        //    waveSeparationFactor: 1,
-        //    startingWaveSeparation: 0,
-        //    startingItemSeparation: 280,
-        //    centerOffset: 10,
-        //    opacityDecreaseFactor: .3,
-        //    autoPlay: 3000,
-        //    edgeReaction: 'reverse'
-        //});
-        //
-        //$("#waterwheel-carousel-vertical").waterwheelCarousel({
-        //    orientation: 'vertical',
-        //    startingItemSeparation: 100,
-        //    startingWaveSeparation: 40,
-        //    autoPlay: 2000
-        //});
+        var carousel = $("#carousel").waterwheelCarousel({
+          flankingItems: 3,
+          movingToCenter: function ($item) {
+            $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movedToCenter: function ($item) {
+            $('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movingFromCenter: function ($item) {
+            $('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movedFromCenter: function ($item) {
+            $('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
+          },
+          clickedCenter: function ($item) {
+            $('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
+          }
+        });
+
+        $('#prev').bind('click', function () {
+          carousel.prev();
+          return false
+        });
+
+        $('#next').bind('click', function () {
+          carousel.next();
+          return false;
+        });
+
+        $('#reload').bind('click', function () {
+          newOptions = eval("(" + $('#newoptions').val() + ")");
+          carousel.reload(newOptions);
+          return false;
+        });
 
       });
     </script>
   </head>
   <body>
-    <div class="example-desc">
-      Default demonstration - no options overriden.
+    <h1>Carousel Demo</h1>
+    <div id="carousel">
+      <img src="images/1.jpg" id="item-1" />
+      <img src="images/2.jpg" id="item-2" />
+      <img src="images/3.jpg" id="item-3" />
+      <img src="images/4.jpg" id="item-4" />
+      <img src="images/5.jpg" id="item-5" />
+      <img src="images/6.jpg" id="item-6" />
+      <img src="images/7.jpg" id="item-7" />
+      <img src="images/8.jpg" id="item-8" />
+      <img src="images/9.jpg" id="item-9" />
     </div>
-    <!-- BEGIN COPYING HERE -->
-    <div id="waterwheel-carousel-default">
-      <div class="carousel-controls">
-      	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
-      	<div class="carousel-next"><a href="#">&gt; next</a></div>
-      </div>
-      <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" id="item1"/>
-        <img src="images/testImage2.png" alt="Test Image 2" id="item2" />
-        <img src="images/testImage3.png" alt="Test Image 3" id="item3" />
-        <img src="images/testImage4.png" alt="Test Image 4" id="item4" />
-        <img src="images/testImage5.png" alt="Test Image 5" id="item5" />
-        <img src="images/testImage6.png" alt="Test Image 6" />
-        <img src="images/testImage7.png" alt="Test Image 7" />
-        <img src="images/testImage8.png" alt="Test Image 8" />
-        <img src="images/testImage9.png" alt="Test Image 9" />
-      </div>
+    <a href="#" id="prev">Prev</a> | <a href="#" id="next">Next</a>
+
+    <br/>
+
+    <div class="split-left">
+      <h2>Set Options (<a href="http://www.bkosborne.com/jquery-waterwheel-carousel/options" target="_blank">view available options</a>)</h2>
+      <p>You can set new options for the carousel here. Once you are satisified with the appearance of the carousel, just copy and paste the options into your own implementation.</p>
+      <textarea id="newoptions" rows="15" cols="50">
+{
+  flankingItems: 3,
+  movingToCenter: function ($item) {
+    $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
+  },
+  movedToCenter: function ($item) {
+    $('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
+  },
+  movingFromCenter: function ($item) {
+    $('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
+  },
+  movedFromCenter: function ($item) {
+    $('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
+  },
+  clickedCenter: function ($item) {
+    $('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
+  }
+}
+      </textarea><br/>
+      <a href="#" id="reload">Reload New Options</a>
     </div>
-    <!-- END COPYING HERE -->
-    
-    <br />
-    
-    <div class="example-desc">
-      High arch effect
-    </div>
-    <!-- BEGIN COPYING HERE -->
-    <div id="waterwheel-carousel-higharch">
-      <div class="carousel-controls">
-      	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
-      	<div class="carousel-next"><a href="#">&gt; next</a></div>
-      </div>
-      <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" />
-        <img src="images/testImage2.png" alt="Test Image 2" />
-        <img src="images/testImage3.png" alt="Test Image 3" />
-        <img src="images/testImage4.png" alt="Test Image 4" />
-        <img src="images/testImage5.png" alt="Test Image 5" />
-        <img src="images/testImage6.png" alt="Test Image 6" />
-        <img src="images/testImage7.png" alt="Test Image 7" />
-        <img src="images/testImage8.png" alt="Test Image 8" />
-        <img src="images/testImage9.png" alt="Test Image 9" />
-        <img src="images/testImage10.png" alt="Test Image 10" />
-        <img src="images/testImage11.png" alt="Test Image 11" />
-      </div>
-    </div>
-    <!-- END COPYING HERE -->
-    
-    <br />
-    
-    <div class="example-desc">
-      Items kept on horizontal plane, opacity turned off, autoplay on
-    </div>
-    <!-- BEGIN COPYING HERE -->
-    <div id="waterwheel-carousel-horizon">
-      <div class="carousel-controls">
-      	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
-      	<div class="carousel-next"><a href="#">&gt; next</a></div>
-      </div>
-      <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" />
-        <img src="images/testImage2.png" alt="Test Image 2" />
-        <img src="images/testImage3.png" alt="Test Image 3" />
-        <img src="images/testImage4.png" alt="Test Image 4" />
-        <img src="images/testImage5.png" alt="Test Image 5" />
-        <img src="images/testImage6.png" alt="Test Image 6" />
-        <img src="images/testImage7.png" alt="Test Image 7" />
-        <img src="images/testImage8.png" alt="Test Image 8" />
-        <img src="images/testImage9.png" alt="Test Image 9" />
-        <img src="images/testImage10.png" alt="Test Image 10" />
-        <img src="images/testImage11.png" alt="Test Image 11" />
+    <div class="split-right">
+      <h2>Sample callback output</h2>
+      <div id="callback-output">
+
       </div>
     </div>
-    <!-- END COPYING HERE -->
-    
-    <br />
-    
-    <div class="example-desc">
-      Completely flat, no 3d effect, slow autoplay with reverse instead of reset edge reaction
-    </div>
-    <!-- BEGIN COPYING HERE -->
-    <div id="waterwheel-carousel-flat">
-      <div class="carousel-controls">
-      	<div class="carousel-prev"><a href="#">&lt; previous</a></div>
-      	<div class="carousel-next"><a href="#">&gt; next</a></div>
-      </div>
-      <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" />
-        <img src="images/testImage2.png" alt="Test Image 2" />
-        <img src="images/testImage3.png" alt="Test Image 3" />
-        <img src="images/testImage4.png" alt="Test Image 4" />
-        <img src="images/testImage5.png" alt="Test Image 5" />
-        <img src="images/testImage6.png" alt="Test Image 6" />
-        <img src="images/testImage7.png" alt="Test Image 7" />
-        <img src="images/testImage8.png" alt="Test Image 8" />
-        <img src="images/testImage9.png" alt="Test Image 9" />
-        <img src="images/testImage10.png" alt="Test Image 10" />
-        <img src="images/testImage11.png" alt="Test Image 11" />
-      </div>
-    </div>
-    <!-- END COPYING HERE -->
-    
-    <br />
-    
-    <div class="example-desc">
-      Waterfall effect (vertical orientation), autoplay turned on
-    </div>
-    <!-- BEGIN COPYING HERE -->
-    <div id="waterwheel-carousel-vertical">
-      <div class="carousel-controls">
-      	<div class="carousel-prev"><a href="#">&lt; move down</a></div>
-      	<div class="carousel-next"><a href="#">&gt; move up</a></div>
-      </div>
-      <div class="carousel-images">
-        <img src="images/testImage1.png" alt="Test Image 1" />
-        <img src="images/testImage2.png" alt="Test Image 2" />
-        <img src="images/testImage3.png" alt="Test Image 3" />
-        <img src="images/testImage4.png" alt="Test Image 4" />
-        <img src="images/testImage5.png" alt="Test Image 5" />
-        <img src="images/testImage6.png" alt="Test Image 6" />
-        <img src="images/testImage7.png" alt="Test Image 7" />
-        <img src="images/testImage8.png" alt="Test Image 8" />
-        <img src="images/testImage9.png" alt="Test Image 9" />
-        <img src="images/testImage10.png" alt="Test Image 10" />
-        <img src="images/testImage11.png" alt="Test Image 11" />
-      </div>
-    </div>
-    <!-- END COPYING HERE -->
+
   </body>
 </html>
 

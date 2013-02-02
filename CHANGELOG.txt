@@ -5,7 +5,15 @@ Version 2.0 - Feb 2013
 - some options renamed, with their meanings changed. See options descriptions for info
 - code cleanup, some inefficiencies removed
 - full support for circular rotation - and thus removed the edgeReaction configuration
-- updated jQuery to 1.8.3
+- fixed bug where you could click a "hidden" item
+- callbacks no longer fire multiple times if the carousel rotates more than once
+- all items no longer need to animate to position during setup, decreasing load on browser
+- 'up' and 'down' arrow keys now only apply if the carousel is in vertical orientation
+- next/prev buttons as well as keyboard nav will always turn off autoplay now
+- updated jQuery compatability from 1.4 to 1.9
+- Intialize multiple carousels from the same selector
+- added public API methods: next, prev, reload
+- removed built in next and prev button handling, use the API methods instead now
 
 =================================
 Version 1.3 - May 22 2011
