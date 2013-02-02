@@ -1,0 +1,32 @@
+{
+  "name": "waterwheelcarousel",
+  "version": "2.0.0",
+  "title": "jQuery Waterwheel Carousel",
+  "author": {
+    "name": "Brian Osborne",
+    "url": "http://www.bkosborne.com"
+  },
+  "licenses": [
+    {
+      "type": "GPLv3",
+      "url": "https://github.com/bkosborne/jQuery-Feature-Carousel/blob/master/GPL-LICENSE.txt"
+    },
+    {
+      "type": "MIT",
+      "url": "https://github.com/bkosborne/jQuery-Feature-Carousel/blob/master/MTL-LICENSE.txt"
+    }
+  ],
+  "description": "This jQuery plugin can display images with a cascading waterwheel effect.",
+  "keywords": ["carousel", "waterwheel-carousel", "image-carousel", "rotator", "image-rotator", "3-d", "3d", "animation"],
+  "homepage": "http://www.bkosborne.com/jQuery-Feature-Carousel",
+  "demo": "http://www.bkosborne.com/jQuery-Feature-Carousel",
+  "maintainers": [
+    {
+      "name": "Brian Osborne",
+      "url": "http://www.bkosborne.com"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.4.4"
+  }
+}
