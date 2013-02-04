@@ -1,6 +1,6 @@
 /*
  * Waterwheel Carousel
- * Version 2.0
+ * Version 2.0.1
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
