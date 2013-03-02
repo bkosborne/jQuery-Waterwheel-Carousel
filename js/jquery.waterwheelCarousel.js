@@ -1,6 +1,6 @@
 /*
  * Waterwheel Carousel
- * Version 2.0.1
+ * Version 2.1
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
@@ -160,7 +160,17 @@
       // are moving out of sight (based on # of flanking items) gracefully animate there
       // However, we need them to animate to hidden, so we set the opacity to 0 for
       // that last item
-      data.calculations[options.flankingItems+1].opacity = 0;
+      if (options.edgeFadeEnabled) {
+        data.calculations[options.flankingItems+1].opacity = 0;
+      } else {
+        data.calculations[options.flankingItems+1] = {
+          distance: 0,
+          offset: 0,
+          width: data.calculations[options.flankingItems].width,
+          height: data.calculations[options.flankingItems].height,
+          opacity: 0
+        }
+      }
     }
 
     /**
@@ -624,6 +634,7 @@
     speed:                      300,      // speed in milliseconds it will take to rotate from one to the next
     animationEasing:            'linear', // the easing effect to use when animating
     quickerForFurther:          true,     // set to true to make animations faster when clicking an item that is far away from the center
+    edgeFadeEnabled:            false,    // when true, items fade off into nothingness when reaching the edge. false to have them move behind the center image
     
     // misc
     linkHandling:               2,                 // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
