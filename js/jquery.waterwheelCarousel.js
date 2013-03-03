@@ -1,6 +1,6 @@
 /*
  * Waterwheel Carousel
- * Version 2.1
+ * Version 2.1.2
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
@@ -31,7 +31,7 @@
     function initializeCarouselData() {
       data = {
         itemsContainer:         $(carousel),
-        totalItems:             $(carousel).children().length,
+        totalItems:             $(carousel).find('img').length,
         containerWidth:         $(carousel).width(),
         containerHeight:        $(carousel).height(),
         currentCenterItem:      null,

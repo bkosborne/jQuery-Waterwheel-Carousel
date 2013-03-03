@@ -1,4 +1,9 @@
 =================================
+Version 2.1.2 - Mar 2013
+=================================
+- bug fixes in preloader and how images are counted
+
+=================================
 Version 2.1 - Mar 2013
 =================================
 - New option "edgeFadeEnabled" - items will animate to a hidden position in the center instead of fading off the edge. Now default option.
