@@ -319,11 +319,11 @@
     }
 
     function moveItem($item, newPosition) {
-      performCalculations($item, newPosition);
-
       // Only want to physically move the item if it is within the boundaries
       // or in the first position just outside either boundary
       if (Math.abs(newPosition) <= options.flankingItems + 1) {
+        performCalculations($item, newPosition);
+
         data.itemsAnimating++;
 
         $item
