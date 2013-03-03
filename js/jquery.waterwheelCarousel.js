@@ -83,7 +83,6 @@
       var $imageElements = data.itemsContainer.find('img'), loadedImages = 0, totalImages = $imageElements.length;
 
       $imageElements.each(function () {
-        // Attempt to load the images
         $(this).bind('load', function () {
           // Add to number of images loaded and see if they are all done yet
           loadedImages += 1;
@@ -95,14 +94,7 @@
         });
         // May need to manually reset the src to get the load event to fire
         // http://stackoverflow.com/questions/7137737/ie9-problems-with-jquery-load-event-not-firing
-        $(this).attr('src') == $(this).attr('src');
-
-        // The images may already be cached in the browser, in which case they
-        // would have a 'true' complete value and the load callback would never be
-        // fired. This will fire it manually.
-        if (this.complete) {
-          $(this).trigger('load');
-        }
+        $(this).attr('src', $(this).attr('src'));
       });
     }
 
