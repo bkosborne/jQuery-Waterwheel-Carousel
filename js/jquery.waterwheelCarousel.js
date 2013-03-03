@@ -151,8 +151,6 @@
         data.calculations[i] = {
           distance: data.calculations[i-1].distance + separation,
           offset:   data.calculations[i-1].offset + horizonOffset,
-          width:    data.calculations[i-1].width * options.sizeMultiplier,
-          height:   data.calculations[i-1].height * options.sizeMultiplier,
           opacity:  data.calculations[i-1].opacity * options.opacityMultiplier
         }
       }
@@ -166,8 +164,6 @@
         data.calculations[options.flankingItems+1] = {
           distance: 0,
           offset: 0,
-          width: data.calculations[options.flankingItems].width,
-          height: data.calculations[options.flankingItems].height,
           opacity: 0
         }
       }
@@ -223,8 +219,6 @@
               .data({
                 currentPosition: 0,
                 oldPosition:     0,
-                width:           $(this).width(),
-                height:          $(this).height(),
                 top:             centerPosTop,
                 left:            centerPosLeft,
                 opacity:         1
@@ -274,18 +268,20 @@
      * the items data object
      */
     function performCalculations($item, newPosition) {
+      var newDistanceFromCenter = Math.abs(newPosition);
+
       // Distance to the center
-      if (Math.abs(newPosition) < options.flankingItems + 1) {
-        var calculations = data.calculations[Math.abs(newPosition)];
+      if (newDistanceFromCenter < options.flankingItems + 1) {
+        var calculations = data.calculations[newDistanceFromCenter];
       } else {
         var calculations = data.calculations[options.flankingItems + 1];
       }
 
-      var newDistanceFromCenter = Math.abs(newPosition);
-      var newWidth = calculations.width;
-      var newHeight = calculations.height;
-      var widthDifference = Math.abs($item.data().width - newWidth);
-      var heightDifference = Math.abs($item.data().height - newHeight);
+      var distanceFactor = Math.pow(options.sizeMultiplier, newDistanceFromCenter)
+      var newWidth = distanceFactor * $item.data('original_width');
+      var newHeight = distanceFactor * $item.data('original_height');
+      var widthDifference = Math.abs($item.width() - newWidth);
+      var heightDifference = Math.abs($item.height() - newHeight);
 
       var newOffset = calculations.offset
       var newDistance = calculations.distance;
