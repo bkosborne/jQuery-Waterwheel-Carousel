@@ -95,6 +95,11 @@
         // May need to manually reset the src to get the load event to fire
         // http://stackoverflow.com/questions/7137737/ie9-problems-with-jquery-load-event-not-firing
         $(this).attr('src', $(this).attr('src'));
+
+        // If browser has cached the images, it may not call trigger a load. Detect this and do it ourselves
+        if (this.complete) {
+          $(this).trigger('load');
+        }
       });
     }
 
