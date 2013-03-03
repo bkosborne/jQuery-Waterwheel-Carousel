@@ -1,4 +1,11 @@
 =================================
+Version 2.1 - Mar 2013
+=================================
+- New option "edgeFadeEnabled" - items will animate to a hidden position in the center instead of fading off the edge. Now default option.
+- Add support for images of different proportions
+- typo in preloader
+
+=================================
 Version 2.0 - Feb 2013
 =================================
 - first image in DOM now placed in center by default
