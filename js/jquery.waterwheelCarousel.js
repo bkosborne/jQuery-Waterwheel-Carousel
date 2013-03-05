@@ -1,6 +1,6 @@
 /*
  * Waterwheel Carousel
- * Version 2.1.2
+ * Version 2.1.3
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
@@ -191,7 +191,7 @@
       data.itemsContainer
         .css('position','relative')
         .find('img')
-          .each(function (i) {
+          .each(function () {
             // Figure out where the top and left positions for center should be
             var centerPosLeft, centerPosTop;
             if (options.orientation === 'horizontal') {
@@ -208,17 +208,18 @@
                 'top': centerPosTop,
                 'visibility': 'visible',
                 'position': 'absolute',
-                'z-index': options.flankingItems + 2,
-                'opacity': 1
+                'z-index': 0,
+                'opacity': 0
               })
               // Give each image a data object so it remembers specific data about
               // it's original form
               .data({
-                currentPosition: 0,
-                oldPosition:     0,
                 top:             centerPosTop,
                 left:            centerPosLeft,
-                opacity:         1
+                oldPosition:     0,
+                currentPosition: 0,
+                depth:           0,
+                opacity:         0
               })
               // The image has been setup... Now we can show it
               .show();
@@ -241,12 +242,14 @@
 
       // Center item
       moveItem(data.items[options.startingItem-1], 0);
+      data.items[options.startingItem-1].css('opacity', 1);
 
       // All the items to the right of center
       var itemIndex = options.startingItem - 1;
       for (var pos = 1; pos <= data.rightItemsCount; pos++) {
         (itemIndex < data.totalItems - 1) ? itemIndex += 1 : itemIndex = 0;
 
+        data.items[itemIndex].css('opacity', 1);
         moveItem(data.items[itemIndex], pos);
       }
 
@@ -255,6 +258,7 @@
       for (var pos = -1; pos >= data.leftItemsCount*-1; pos--) {
         (itemIndex > 0) ? itemIndex -= 1 : itemIndex = data.totalItems - 1;
 
+        data.items[itemIndex].css('opacity', 1);
         moveItem(data.items[itemIndex], pos);
       }
     }
