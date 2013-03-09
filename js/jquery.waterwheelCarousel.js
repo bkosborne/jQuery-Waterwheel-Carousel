@@ -1,12 +1,13 @@
-/*
+/*!
  * Waterwheel Carousel
- * Version 2.1.3
+ * Version 2.2.0
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
- * Licensed under GPL version 3
- * http://www.gnu.org/licenses/gpl.txt
- * 
+ * Dual licensed under GPLv3 or MIT
+ * Copies of the licenses have been distributed
+ * with this plugin.
+ *
  * Plugin written by Brian Osborne
  * for use with the jQuery JavaScript Framework
  * http://www.jquery.com
@@ -80,6 +81,11 @@
      * if a user instead manually specifies that information.
      */
     function preload(callback) {
+      if (options.preloadImages === false) {
+        callback();
+        return;
+      }
+
       var $imageElements = data.itemsContainer.find('img'), loadedImages = 0, totalImages = $imageElements.length;
 
       $imageElements.each(function () {
@@ -110,13 +116,28 @@
      */
     function setOriginalItemDimensions() {
       data.itemsContainer.find('img').each(function () {
-        if ($(this).data('original_width') == undefined) {
+        if ($(this).data('original_width') == undefined || options.forcedImageWidth > 0) {
           $(this).data('original_width', $(this).width());
         }
-        if ($(this).data('original_height') == undefined) {
+        if ($(this).data('original_height') == undefined || options.forcedImageHeight > 0) {
           $(this).data('original_height', $(this).height());
         }
       });
+    }
+
+    /**
+     * Users can pass in a specific width and height that should be applied to every image.
+     * While this option can be used in conjunction with the image preloader, the intended
+     * use case is for when the preloader is turned off and the images don't have defined
+     * dimensions in CSS. The carousel needs dimensions one way or another to work properly.
+     */
+    function forceImageDimensionsIfEnabled() {
+      if (options.forcedImageWidth && options.forcedImageHeight) {
+        data.itemsContainer.find('img').each(function () {
+          $(this).width(options.forcedImageWidth);
+          $(this).height(options.forcedImageHeight);
+        });
+      }
     }
 
     /**
@@ -131,8 +152,6 @@
       data.calculations[0] = {
         distance: 0,
         offset:   0,
-        width:    $firstItem.data('original_width'),
-        height:   $firstItem.data('original_height'),
         opacity:  1
       }
 
@@ -195,11 +214,11 @@
             // Figure out where the top and left positions for center should be
             var centerPosLeft, centerPosTop;
             if (options.orientation === 'horizontal') {
-              centerPosLeft = (data.containerWidth / 2) - ($(this).width() / 2);
-              centerPosTop = options.horizon - ($(this).height() / 2);
+              centerPosLeft = (data.containerWidth / 2) - ($(this).data('original_width') / 2);
+              centerPosTop = options.horizon - ($(this).data('original_height') / 2);
             } else {
-              centerPosLeft = options.horizon - ($(this).width() / 2);
-              centerPosTop = (data.containerHeight / 2) - ($(this).height() / 2);
+              centerPosLeft = options.horizon - ($(this).data('original_width') / 2);
+              centerPosTop = (data.containerHeight / 2) - ($(this).data('original_height') / 2);
             }
             $(this)
               // Apply positioning and layering to the images
@@ -478,6 +497,7 @@
 
       // Remove autoplay
       autoPlay(true);
+      options.autoPlay = 0;
       
       var rotations = Math.abs(itemPosition);
       if (itemPosition == 0) {
@@ -589,6 +609,8 @@
 
       initializeCarouselData();
       data.itemsContainer.find('img').hide();
+      forceImageDimensionsIfEnabled();
+
       preload(function () {
         setOriginalItemDimensions();
         preCalculatePositionProperties();
@@ -625,7 +647,7 @@
     sizeMultiplier:             0.7, // determines how drastically the size of each item changes
     opacityMultiplier:          0.8, // determines how drastically the opacity of each item changes
     horizon:                    0,   // how "far in" the horizontal/vertical horizon should be set from the container wall. 0 for auto
-    flankingItems:              3,   // the number of items visible on either side of the center
+    flankingItems:              3,   // the number of items visible on either side of the center                  
 
     // animation
     speed:                      300,      // speed in milliseconds it will take to rotate from one to the next
@@ -641,6 +663,11 @@
     keyboardNav:                false,             // set to true to move the carousel with the arrow keys
     keyboardNavOverride:        true,              // set to true to override the normal functionality of the arrow keys (prevents scrolling)
  
+    // preloader
+    preloadImages:              true,  // disable/enable the image preloader. 
+    forcedImageWidth:           0,     // specify width of all images; otherwise the carousel tries to calculate it
+    forcedImageHeight:          0,     // specify height of all images; otherwise the carousel tries to calculate it
+
     // callback functions
     movingToCenter:             $.noop, // fired when an item is about to move to the center position
     movedToCenter:              $.noop, // fired when an item has finished moving to the center

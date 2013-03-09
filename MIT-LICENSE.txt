@@ -1,4 +1,4 @@
-Copyright (c) 2011 Brian Osborne
+Copyright (c) 2011-2013 Brian Osborne
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

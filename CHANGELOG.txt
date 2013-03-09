@@ -1,4 +1,11 @@
 =================================
+Version 2.2.0 - Mar 2013
+=================================
+- Adjusted legal header a bit, also include legal header in minified version
+- Three new options that allow you to disable the preloader and specify forced width/height for images
+- Fixed autoplay bug where it would continue to rotate the carousel automatically after user interaction
+
+=================================
 Version 2.1.3 - Mar 2013
 =================================
 - bug fix where opacity and depth for items are not set properly on start/reload
