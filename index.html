@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Waterwheel Carousel Demo</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.waterwheelCarousel.min.js"></script>
+    <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         var carousel = $("#carousel").waterwheelCarousel({
@@ -71,7 +71,7 @@
       }
 
       .split-left {
-        width:400px;
+        width:450px;
         float:left;
       }
       .split-right {
@@ -82,6 +82,9 @@
       #callback-output {
         height:250px;
         overflow:scroll;
+      }
+      textarea#newoptions {
+        width:430px;
       }
     </style>
   </head>
@@ -105,7 +108,7 @@
     <div class="split-left">
       <h2>Set Options (<a href="http://www.bkosborne.com/jquery-waterwheel-carousel/options" target="_blank">view available options</a>)</h2>
       <p>You can set new options for the carousel here. Once you are satisified with the appearance of the carousel, just copy and paste the options into your own implementation.</p>
-      <textarea id="newoptions" rows="15" cols="50">
+      <textarea id="newoptions" rows="15">
 {
   flankingItems: 3,
   movingToCenter: function ($item) {
