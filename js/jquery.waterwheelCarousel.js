@@ -1,6 +1,6 @@
 /*!
  * Waterwheel Carousel
- * Version 2.2.0
+ * Version 2.3.0
  * http://www.bkosborne.com
  *
  * Copyright 2011-2013 Brian Osborne
@@ -484,6 +484,9 @@
     $(this).find('img').bind("click", function () {
       var itemPosition = $(this).data().currentPosition;
 
+      if (options.imageNav == false) {
+        return;
+      }
       // Don't allow hidden items to be clicked
       if (Math.abs(itemPosition) >= options.flankingItems + 1) {
         return;
@@ -662,7 +665,8 @@
     activeClassName:            'carousel-center', // the name of the class given to the current item in the center
     keyboardNav:                false,             // set to true to move the carousel with the arrow keys
     keyboardNavOverride:        true,              // set to true to override the normal functionality of the arrow keys (prevents scrolling)
- 
+    imageNav:                   true,              // clicking a non-center image will rotate that image to the center
+
     // preloader
     preloadImages:              true,  // disable/enable the image preloader. 
     forcedImageWidth:           0,     // specify width of all images; otherwise the carousel tries to calculate it

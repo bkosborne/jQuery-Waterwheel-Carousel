@@ -1,4 +1,9 @@
 =================================
+Version 2.3.0 - Mar 2013
+=================================
+- Added a new option to control if the carousel is moved when non-center images are clicked
+
+=================================
 Version 2.2.0 - Mar 2013
 =================================
 - Adjusted legal header a bit, also include legal header in minified version
