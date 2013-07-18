@@ -9,6 +9,9 @@
       $(document).ready(function () {
         var carousel = $("#carousel").waterwheelCarousel({
           flankingItems: 3,
+          afterInit: function () {
+            $('#callback-output').prepend('Carousel initialized!<br/>');
+          },
           movingToCenter: function ($item) {
             $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
           },
