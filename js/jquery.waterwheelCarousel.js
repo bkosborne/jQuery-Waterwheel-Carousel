@@ -243,6 +243,7 @@
               // The image has been setup... Now we can show it
               .show();
           });
+
     }
 
     /**
@@ -414,6 +415,10 @@
             options.movedToCenter(data.currentCenterItem);
             options.movedFromCenter(data.previousCenterItem);
           }
+          else {
+            // Call afterInit Callback
+            options.afterInit();
+          }
 
           data.performingSetup = false;
           // reset & initate the autoPlay
@@ -437,7 +442,7 @@
         data.currentlyMoving = true;
         data.itemsAnimating = 0;
         data.carouselRotationsLeft += rotations;
-        
+
         if (options.quickerForFurther === true) {
           // Figure out how fast the carousel should rotate
           if (rotations > 1) {
@@ -467,7 +472,7 @@
             // when we have an item switch sides. The right side will always have 1 more in that case
             if (data.totalItems % 2 == 0) {
               newPosition += 1;
-            } 
+            }
           }
 
           moveItem($item, newPosition);
@@ -501,7 +506,7 @@
       // Remove autoplay
       autoPlay(true);
       options.autoPlay = 0;
-      
+
       var rotations = Math.abs(itemPosition);
       if (itemPosition == 0) {
         options.clickedCenter($(this));
@@ -571,7 +576,7 @@
 
       rotateCarousel(1);
     }
-    
+
     /**
      * Navigation with arrow keys
      */
@@ -621,7 +626,7 @@
         setupStarterRotation();
       });
     }
-    
+
     this.next = function() {
       autoPlay(true);
       options.autoPlay = 0;
@@ -650,14 +655,14 @@
     sizeMultiplier:             0.7, // determines how drastically the size of each item changes
     opacityMultiplier:          0.8, // determines how drastically the opacity of each item changes
     horizon:                    0,   // how "far in" the horizontal/vertical horizon should be set from the container wall. 0 for auto
-    flankingItems:              3,   // the number of items visible on either side of the center                  
+    flankingItems:              3,   // the number of items visible on either side of the center
 
     // animation
     speed:                      300,      // speed in milliseconds it will take to rotate from one to the next
     animationEasing:            'linear', // the easing effect to use when animating
     quickerForFurther:          true,     // set to true to make animations faster when clicking an item that is far away from the center
     edgeFadeEnabled:            false,    // when true, items fade off into nothingness when reaching the edge. false to have them move behind the center image
-    
+
     // misc
     linkHandling:               2,                 // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
     autoPlay:                   0,                 // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
@@ -668,11 +673,12 @@
     imageNav:                   true,              // clicking a non-center image will rotate that image to the center
 
     // preloader
-    preloadImages:              true,  // disable/enable the image preloader. 
+    preloadImages:              true,  // disable/enable the image preloader.
     forcedImageWidth:           0,     // specify width of all images; otherwise the carousel tries to calculate it
     forcedImageHeight:          0,     // specify height of all images; otherwise the carousel tries to calculate it
 
     // callback functions
+    afterInit:                  $.noop, // fired when initialization is done
     movingToCenter:             $.noop, // fired when an item is about to move to the center position
     movedToCenter:              $.noop, // fired when an item has finished moving to the center
     clickedCenter:              $.noop, // fired when the center item has been clicked
