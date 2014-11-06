@@ -634,6 +634,17 @@
 
       moveOnce('backward');
     }
+    
+   this.autoPlay = function(delay) {
+      autoPlay(true);
+      options.autoPlay = delay;
+     
+    }
+
+    this.pausePlay = function() {
+      autoPlay(false);
+      options.autoPlay = 0;
+    }
 
     this.reload(startingOptions);
 
