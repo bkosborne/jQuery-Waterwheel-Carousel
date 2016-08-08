@@ -1,0 +1,48 @@
+{
+  "author": {
+    "name": "Brian Osborne",
+    "url": "http://www.bkosborne.com"
+  },
+  "bugs": {
+    "url": "https://github.com/bkosborne/jQuery-Waterwheel-Carousel/issues"
+  },
+  "dependencies": {
+    "jquery": ">=1.4.4"
+  },
+  "description": "This jQuery plugin can display images with a cascading waterwheel effect.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {},
+  "docs": "https://github.com/bkosborne/jQuery-Waterwheel-Carousel/blob/master/README.txt",
+  "download": "https://github.com/bkosborne/jQuery-Waterwheel-Carousel/archive/master.zip",
+  "gitHead": "ef98c10cdde9114d3137b680647806e6ff76c05e",
+  "github": "http://github.com/bkosborne/jQuery-Waterwheel-Carousel/",
+  "homepage": "http://www.bkosborne.com/jquery-waterwheel-carousel",
+  "keywords": ["carousel", "waterwheel-carousel", "image-carousel", "rotator", "image-rotator", "3-d", "3d", "animation"],
+  "licenses": [
+    {
+      "type": "GPLv3",
+      "url": "https://github.com/bkosborne/jQuery-Waterwheel-Carousel/blob/master/GPL-LICENSE.txt"
+    },
+    {
+      "type": "MIT",
+      "url": "https://github.com/bkosborne/jQuery-Waterwheel-Carousel/blob/master/MIT-LICENSE.txt"
+    }
+  ],
+  "main": "js/jquery.waterwheelCarousel.js",
+  "maintainers": [
+    {
+      "name": "Brian Osborne",
+      "url": "http://www.bkosborne.com"
+    }
+  ],
+  "name": "jquery-waterwheel-carousel",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkosborne/jQuery-Waterwheel-Carousel.git"
+  },
+  "scripts": {},
+  "title": "jQuery Waterwheel Carousel",
+  "version": "2.3.0"
+}
