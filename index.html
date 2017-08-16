@@ -1,142 +1,324 @@
-<!doctype html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Waterwheel Carousel Demo</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.waterwheelCarousel.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        var carousel = $("#carousel").waterwheelCarousel({
-          flankingItems: 3,
-          movingToCenter: function ($item) {
-            $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
-          },
-          movedToCenter: function ($item) {
-            $('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
-          },
-          movingFromCenter: function ($item) {
-            $('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
-          },
-          movedFromCenter: function ($item) {
-            $('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
-          },
-          clickedCenter: function ($item) {
-            $('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
-          }
-        });
+<style type="text/css">
+    body{
+        position: relative;
+    }
+    .desk-sis-wrapper{
+        width: 65%;
+        margin: auto;
+        padding-bottom: 100px;
+    }
+    .image img{
+        width: 100%;
+        position: absolute;
+    }
+    .heading{
+        position: relative;
+    }
+    h4.heading{
+        text-transform: uppercase;
+        text-align: center;
+        color: #4F5D66;
+        margin-top: 50px;
+    }
+    .nopadding{
+        padding: 0;
+    }
+    .top{
+        margin-top: 40px;
+    }
+    .sis-background-wrapper{
+        background-color: #0D202F;
+        width: 100%;
+    }
+    .placeholder, .placeholder2{
+        height: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .placeholder{
+        background: #f9f9f9;
+    }
+    .placeholder2{
+        background: #e4dfdf;;
+    }
+    .placeholder-1{
+        padding-bottom: 81.96%;
+    }
+    .placeholder-3{
+        padding-bottom: 11.8%;
+    }
+    .play-controls-strip{
+        background: #12283D;
+        text-align: center;
+        padding: 10px 0;
+    }
+    .control-wrapper{
+        margin: auto;
+        width: 238px;
+        height: 58px;
+    }
+    .track::hover{
+        background: black;
+        z-index: 1;
+    }
+    #carousel {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        clear: both;
+        background: black;
+        margin: auto;
+        overflow: hidden;
+    }
+    #carousel img {
+        visibility:hidden;
+        cursor:pointer;  
+    }
 
-        $('#prev').bind('click', function () {
-          carousel.prev();
-          return false
-        });
-
-        $('#next').bind('click', function () {
-          carousel.next();
-          return false;
-        });
-
-        $('#reload').bind('click', function () {
-          newOptions = eval("(" + $('#newoptions').val() + ")");
-          carousel.reload(newOptions);
-          return false;
-        });
-
-      });
-    </script>
-
-    <style type="text/css">
-      body {
-        font-family:Arial;
-        font-size:12px;
-        background:#ededed;
-      }
-      .example-desc {
-        margin:3px 0;
-        padding:5px;
-      }
-
-      #carousel {
-        width:960px;
-        border:1px solid #222;
-        height:300px;
-        position:relative;
-        clear:both;
-        overflow:hidden;
-        background:#FFF;
-      }
-      #carousel img {
-        visibility:hidden; /* hide images until carousel can handle them */
-        cursor:pointer; /* otherwise it's not as obvious items can be clicked */
-      }
-
-      .split-left {
-        width:450px;
-        float:left;
-      }
-      .split-right {
-        width:400px;
-        float:left;
-        margin-left:10px;
-      }
-      #callback-output {
-        height:250px;
-        overflow:scroll;
-      }
-      textarea#newoptions {
-        width:430px;
-      }
+    .split-left {
+        width: 450px;
+        float: left;
+    }
+    .split-right {
+        width: 400px;
+        float: left;
+        margin-left: 10px;
+    }
+    #callback-output {
+        height: 250px;
+        overflow: scroll;
+    }
+    .crsl-wrapper{
+        background: black;
+    }
+    .track{
+        border: 1px solid #0D202F;
+        position: relative;
+    }
+    .track-overlay{
+        position: absolute;
+        background: rgba(23, 22, 22, 0.30);
+        top: 0;
+    }
+    .control-wrapper span{
+        background-image: url('//static.jabong.com/cms/newsite/spritesheetwithpause2x.png');
+        height: 58px;
+        width: 58px;
+        position: absolute;
+        display: block;
+        background-size: 272px;
+    }
+    #prev{
+        background-position: 0 0;
+    }
+    #next{
+        margin-left: 134px;
+        background-position: -57px 0;
+    }
+    #mutebtn.mutebtn{
+        margin-left: 250px;
+        background-position: 157px 0;
+        width: 22px;
+    }
+    #mutebtn.muted{
+        background-position: 135px 0;
+    }
+    #audioplay.pause{
+        background-position: 56px 0;
+        margin-left: 64px;
+    }
+    #audioplay.play{
+        background-position: 115px 0;
+        margin-left: 64px;
+    }
+    audio{
+        display: none;
+    }
+    @media(max-width: 767px){
+        .desk-sis-wrapper{
+            width: 100%;
+            padding-bottom: 40px;
+        }
+        .top{
+          margin-top: 0;
+        }
+        .heading img{
+            width: 100%;
+        }
+        .placeholder-1{
+            padding-bottom: 99.34%;
+        }
+        .placeholder-3{
+            padding-bottom: 27.73%;
+        }
+        h4.heading{
+            display: none;
+        }
+        .control-wrapper{
+            height: 40px;
+        }
+        .control-wrapper span{
+            background-size: 190px;
+            height: 40px;
+            width: 40px;
+        }
+        #prev{
+            margin-left: 12px;
+        }
+        #next{
+            background-position: 149px 0;
+            margin-left: 30%;
+        }
+        #mutebtn.mutebtn{
+            background-position: -78px 0;
+            width: 18px;
+        }
+        #mutebtn.muted{
+            background-position: -95px 0;
+        }
+        #audioplay.pause{
+            background-position: 40px 0;
+            margin-left: 64px;
+        }
+        #audioplay.play{
+            background-position: 80px 0;
+            margin-left: 64px;
+        }
+    }
+    @media(max-width: 768px){
+        #carousel {
+            height: 200px;
+        }
+    }
     </style>
-  </head>
-  <body>
-    <h1>Carousel Demo</h1>
-    <div id="carousel">
-      <img src="images/1.jpg" id="item-1" />
-      <img src="images/2.jpg" id="item-2" />
-      <img src="images/3.jpg" id="item-3" />
-      <img src="images/4.jpg" id="item-4" />
-      <img src="images/5.jpg" id="item-5" />
-      <img src="images/6.jpg" id="item-6" />
-      <img src="images/7.jpg" id="item-7" />
-      <img src="images/8.jpg" id="item-8" />
-      <img src="images/9.jpg" id="item-9" />
+<div class="crsl-wrapper">
+  <div id="carousel">
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-1" alt="...">
+    </a>
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-2" alt="...">
+    </a>
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-3" alt="...">
+    </a>
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-4" alt="...">
+    </a>
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-5" alt="...">
+    </a>
+    <a href="/all-products">
+        <img class="loaded" src="//static.jabong.com/live/images/img1x1.png" 
+            data-src-320="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-500="https://static.jabong.com/cms/new-site//msite_mweb_1501676582323.jpg" 
+            data-src-768="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg"
+            data-src-1024="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" 
+            data-src-1280="https://static.jabong.com/cms/new-site//desktop_desktop_1501676577809.jpg" id="item-6" alt="...">
+    </a>
+  </div>
+</div>
+<section class="play-controls-strip">
+    <div class="control-wrapper">
+        <a href=""><span id="prev"></span></a>
+        <a href="javascript:void(0)"><span id="audioplay" class="pause"></span></a>
+        <a href=""><span id="next"></span></a>
+        <a href="javascript:void(0)"><span id="mutebtn" class="mutebtn"></span></a>
     </div>
-    <a href="#" id="prev">Prev</a> | <a href="#" id="next">Next</a>
-
-    <br/>
-
-    <div class="split-left">
-      <h2>Set Options (<a href="http://www.bkosborne.com/jquery-waterwheel-carousel/options" target="_blank">view available options</a>)</h2>
-      <p>You can set new options for the carousel here. Once you are satisified with the appearance of the carousel, just copy and paste the options into your own implementation.</p>
-      <textarea id="newoptions" rows="15">
-{
-  flankingItems: 3,
-  movingToCenter: function ($item) {
-    $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
-  },
-  movedToCenter: function ($item) {
-    $('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
-  },
-  movingFromCenter: function ($item) {
-    $('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
-  },
-  movedFromCenter: function ($item) {
-    $('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
-  },
-  clickedCenter: function ($item) {
-    $('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
-  }
-}
-      </textarea><br/>
-      <a href="#" id="reload">Reload New Options</a>
+</section>
+<div class="sis-background-wrapper">
+    <div class="desk-sis-wrapper clearfix">
+        <h4 class="heading">Your playlist of brands</h4>
+        <section class="image clearfix top">
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track songdiv" id="track-item-1" data-crsl-img="item-1" data-cms-editable="true">
+                <figure class="placeholder placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                    <audio controls id="track-music" loop="true"> 
+                        <source src="https://static.jabong.com/cms/newsite/sneaker_demo_audio_clip.mp3" type="audio/mpeg">
+                        Audio not supported
+                    </audio>
+                </figure>
+            </div>
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track" data-crsl-img="item-2" data-cms-editable="true">
+                <figure class="placeholder2 placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                </figure>
+            </div>
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track" data-crsl-img="item-3" data-cms-editable="true">
+                <figure class="placeholder placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                </figure>
+            </div>
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track" data-crsl-img="item-4" data-cms-editable="true">
+                <figure class="placeholder2 placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                </figure>
+            </div>
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track" data-crsl-img="item-5" data-cms-editable="true">
+                <figure class="placeholder placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                </figure>
+            </div>
+            <div class="col-xxs-12 col-xs-12 clearfix nopadding track" data-crsl-img="item-6" data-cms-editable="true">
+                <figure class="placeholder2 placeholder-3">
+                    <img class="load-in-viewport" src="//static.jabong.com/live/images/img1x1.png" 
+                        data-src-320="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-500="https://static.jabong.com/cms/new-site//playlist_mweb_1501596180049.jpg" 
+                        data-src-768="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg"
+                        data-src-1024="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" 
+                        data-src-1280="https://static.jabong.com/cms/new-site//playlist_desktop_1501596175116.jpg" alt="...">
+                </figure>
+            </div>
+        </section>
     </div>
-    <div class="split-right">
-      <h2>Sample callback output</h2>
-      <div id="callback-output">
-
-      </div>
-    </div>
-
-  </body>
-</html>
-
+</div>

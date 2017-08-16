@@ -1,18 +1,5 @@
-/*!
- * Waterwheel Carousel
- * Version 2.3.0
- * http://www.bkosborne.com
- *
- * Copyright 2011-2013 Brian Osborne
- * Dual licensed under GPLv3 or MIT
- * Copies of the licenses have been distributed
- * with this plugin.
- *
- * Plugin written by Brian Osborne
- * for use with the jQuery JavaScript Framework
- * http://www.jquery.com
- */
-;(function ($) {
+window.onload = function() {
+  (function ($) {
   'use strict';
 
   $.fn.waterwheelCarousel = function (startingOptions) {
@@ -488,9 +475,9 @@
         return;
       }
       // Don't allow hidden items to be clicked
-      if (Math.abs(itemPosition) >= options.flankingItems + 1) {
+      /*if (Math.abs(itemPosition) >= options.flankingItems + 1) {
         return;
-      }
+      }*/
       // Do nothing if the carousel is already moving
       if (data.currentlyMoving) {
         return;
@@ -500,7 +487,10 @@
 
       // Remove autoplay
       autoPlay(true);
-      options.autoPlay = 0;
+      //options.autoPlay = 0;
+      if(pauseflag){
+        $('#audioplay').click();
+      }
       
       var rotations = Math.abs(itemPosition);
       if (itemPosition == 0) {
@@ -622,15 +612,29 @@
       });
     }
     
-    this.next = function() {
-      autoPlay(true);
-      options.autoPlay = 0;
+    this.next = function(pauseSlide) {
+      if(pauseSlide){
+        autoPlay(true);
+        options.autoPlay = 0;
+      }
 
       moveOnce('forward');
     }
-    this.prev = function () {
+
+    this.pauseautoplay = function(){
       autoPlay(true);
       options.autoPlay = 0;
+    }
+
+    this.autoplayon = function(){
+      options.autoPlay = 3000;
+      autoPlay();
+    }
+    this.prev = function (pauseSlide) {
+      if(pauseSlide){
+        autoPlay(true);
+        options.autoPlay = 0;
+      }
 
       moveOnce('backward');
     }
@@ -643,11 +647,11 @@
   $.fn.waterwheelCarousel.defaults = {
     // number tweeks to change apperance
     startingItem:               1,   // item to place in the center of the carousel. Set to 0 for auto
-    separation:                 175, // distance between items in carousel
+    separation:                 400, // distance between items in carousel
     separationMultiplier:       0.6, // multipled by separation distance to increase/decrease distance for each additional item
     horizonOffset:              0,   // offset each item from the "horizon" by this amount (causes arching)
     horizonOffsetMultiplier:    1,   // multipled by horizon offset to increase/decrease offset for each additional item
-    sizeMultiplier:             0.7, // determines how drastically the size of each item changes
+    sizeMultiplier:             0.6, // determines how drastically the size of each item changes
     opacityMultiplier:          0.8, // determines how drastically the opacity of each item changes
     horizon:                    0,   // how "far in" the horizontal/vertical horizon should be set from the container wall. 0 for auto
     flankingItems:              3,   // the number of items visible on either side of the center                  
@@ -660,7 +664,7 @@
     
     // misc
     linkHandling:               2,                 // 1 to disable all (used for facebox), 2 to disable all but center (to link images out)
-    autoPlay:                   0,                 // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
+    autoPlay:                   3000,                 // indicate the speed in milliseconds to wait before autorotating. 0 to turn off. Can be negative
     orientation:                'horizontal',      // indicate if the carousel should be 'horizontal' or 'vertical'
     activeClassName:            'carousel-center', // the name of the class given to the current item in the center
     keyboardNav:                false,             // set to true to move the carousel with the arrow keys
@@ -680,4 +684,237 @@
     movedFromCenter:            $.noop  // fired when an item has finished moving from the center
   };
 
-})(jQuery);
+})($);
+var muteflag = false,
+pauseflag = false,
+audio = $('audio')[0];
+
+var opt = {
+          flankingItems: 1,
+          imageNav: true,
+          opacityMultiplier: 0.9,
+          movingToCenter: function ($item) {
+            $('#callback-output').prepend('movingToCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movedToCenter: function ($item) {
+            var pl_el = $('div[data-crsl-img='+ $item.attr('id') +']');
+            addOverlay(pl_el);
+            $('#callback-output').prepend('movedToCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movingFromCenter: function ($item) {
+            $('#callback-output').prepend('movingFromCenter: ' + $item.attr('id') + '<br/>');
+          },
+          movedFromCenter: function ($item) {
+            $('#callback-output').prepend('movedFromCenter: ' + $item.attr('id') + '<br/>');
+          },
+          clickedCenter: function ($item) {
+            $('#callback-output').prepend('clickedCenter: ' + $item.attr('id') + '<br/>');
+          }
+        }
+
+        //iphone5 etc
+        if($( window ).width() > 319 && $( window ).width() < 360){
+          opt.forcedImageWidth= 200,
+          opt.forcedImageHeight= 200;
+          opt.separation= 150;
+          opt.flankingItems = 1;
+        }
+
+        //common mobile devices
+        if($( window ).width() >= 360 && $( window ).width() <= 420){
+            opt.forcedImageWidth= 250,
+            opt.forcedImageHeight= 200;
+            opt.separation= 150;
+            opt.flankingItems = 1;
+        }
+
+        //greater resolutions
+        if($( window ).width() >  768){
+            opt.forcedImageWidth= 610,
+            opt.forcedImageHeight= 400;
+            opt.flankingItems = calculateFlankingItems($('#carousel').find('img').length);
+            opt.separation = opt.flankingItems > 1 ? 300 : 400;
+        }
+
+        //tabs
+        if($( window ).width() ==  768){
+            opt.forcedImageWidth= 250,
+            opt.forcedImageHeight= 200;
+            opt.flankingItems = calculateFlankingItems($('#carousel').find('img').length);
+            opt.separation = opt.flankingItems > 1 ? 150 : 250;
+        }
+
+        //ipad
+        if($( window ).width() > 420 && $( window ).width() < 768){
+            opt.forcedImageWidth= 250,
+            opt.forcedImageHeight= 200;
+            opt.flankingItems = 1;
+            opt.separation= 200;
+        }
+
+        var carousel = $("#carousel").waterwheelCarousel(opt);
+
+        /*mute unmute functionality*/
+        $('#mutebtn').bind('click', mutesong);
+        function mutesong(){
+            var bool = $('#track-music').prop("muted");
+            $("#track-music").prop("muted",!bool);
+            muteflag = !muteflag;
+            if(muteflag){
+              $('#mutebtn').addClass('muted');
+            }
+            else{
+              $('#mutebtn').removeClass('muted');
+            }
+        }
+
+        /*play pause functionality*/
+        $('#audioplay').bind('click', pauseslide);
+        function pauseslide(){
+          pauseflag = !pauseflag;
+          if(pauseflag){
+            audio.pause();
+            carousel.pauseautoplay();
+            $('#audioplay').addClass('play');
+          }
+          else{
+            playTrackAudio();
+            carousel.autoplayon();
+            $('#audioplay').removeClass('play');
+          }
+          
+        }
+
+        function calculateFlankingItems(number){
+          var flankinglimit = 2,
+          result;
+          if(number%2){
+            result = Math.floor(number/2);
+          }
+          else{
+            result = Math.floor((number-1)/2);
+          }
+          return result > flankinglimit ? flankinglimit : result;
+        }
+        
+
+        function playTrackAudio() {
+          //var audio = $('audio')[0];
+            audio.play();
+            if(muteflag){
+              $('#track-music').prop("muted",true);
+            }
+        }
+
+        /*play different tracks*/
+        var musicTrackMapper = {
+        };
+
+        var globalAudio = {
+          audio: null,
+          mute: false
+        }
+        
+        function initializeAudio() {
+           // Get all track div  [one element]  - [6 elemnet]
+           // for each div
+           $('.songdiv').each(function(i){
+            // get audio uri
+           // create audio
+            var audio = $('audio')[i];
+              //$(this).append(audio);
+              musicTrackMapper[$(this).attr('id')] = audio;
+           });
+        }
+
+        function playTracksAudio(trackElm) {
+          var audio = globalAudio.audio;
+          if(audio!==null){
+            //audio.stop();
+            audio.pause();
+            audio.currentTime = 0;
+          }
+            //audio = musicTrackMapper[trackElm.attr('id')];
+            audio = musicTrackMapper['track-item-1'];
+            audio.play();
+            globalAudio.audio = audio;
+        }
+        /*play different tracks ends*/
+
+
+        /*Add overlay when an image in playlist is clicked*/
+        function addOverlay($this, expHeight) {
+          var $this=$this;
+          removeOverlay($this);
+          //use below if different items have different audio
+          /*playTracksAudio($this);*/
+          
+          var imgheight=$this.find("img").height(),
+          height;
+          if(expHeight){
+            height=expHeight+"px";
+          }
+          else{
+            height=imgheight+"px";
+          }
+            var imgwidth=$this.find("img").width(),
+              width=imgwidth+"px";
+          $this.append("<div class='track-overlay'></div>");
+          $(".track-overlay").css({"height": height, "width": width});
+        }
+
+        /*remove overlay from other images in playlist*/
+        function removeOverlay(elem){
+          $('.track-overlay').remove();
+        }
+
+        /*function when an item in playlist is clicked*/
+        $('.track').on("click", changePlaylist);
+        function changePlaylist() {
+          var $this= $(this);
+          addOverlay($this);
+          var $crsl_img_id = '#' +  $(this).attr("data-crsl-img");
+          var $crsl_img = $('#carousel').find($crsl_img_id);
+          if(!$crsl_img.hasClass('carousel-center')){
+            $crsl_img.click();
+          }
+          if(pauseflag){
+            $('#audioplay').click();
+          }
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+
+
+        $('#prev').bind('click', function () {
+          /*pass true if autoplay should stop*/
+          carousel.prev();
+          if(pauseflag){
+            $('#audioplay').click();
+          }
+          return false
+        });
+
+        $('#next').bind('click', function () {
+          /*pass true if autoplay should stop*/
+          carousel.next();
+          if(pauseflag){
+            $('#audioplay').click();
+          }
+          return false;
+        });
+
+        $('#reload').bind('click', function () {
+          newOptions = eval("(" + $('#newoptions').val() + ")");
+          carousel.reload(newOptions);
+          return false;
+        });
+
+        function init(){
+          //initializeAudio();
+          addOverlay($('#track-item-1'), 175);
+          //playTrackAudio();
+          /*for playing track globally*/
+          playTrackAudio();
+        }
+        init();
+}
