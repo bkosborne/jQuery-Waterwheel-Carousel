@@ -27,6 +27,7 @@
     }
   ],
   "dependencies": {
-    "jquery": ">=1.4.4"
+    "jquery": ">=1.4.4",
+    "jquery-touchswipe": ">=1.6.18"
   }
 }

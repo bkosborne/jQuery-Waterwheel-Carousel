@@ -636,6 +636,22 @@
     }
 
     this.reload(startingOptions);
+    
+    this.swipe({
+          swipeStatus: function (event, phase, direction) {
+              if (phase === "end") {
+                  if (direction === "right") {
+                      moveOnce('backward');
+                  }
+                  else if (direction === "left") {
+                      moveOnce('forward');
+                  } else { return false; }
+              }
+          },
+          triggerOnTouchStart: false,
+          triggerOnTouchEnd: false,
+          threshold: 100
+      });
 
     return this;
   };
